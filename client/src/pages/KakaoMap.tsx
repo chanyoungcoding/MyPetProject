@@ -1,10 +1,11 @@
 /* eslint-disable */
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import { IoSearchOutline, IoCafe } from "react-icons/io5";
 import { FaHotel, FaHospital } from "react-icons/fa";
 import { useSpring, animated } from 'react-spring';
 
+import { MapData } from '../interface/interface';
 import './kakaompa.scss';
 
 declare global {
@@ -51,6 +52,7 @@ const MapUnderSearchContainer = styled(animated.div)`
   padding: 10px;
   background-color: white;
   z-index: 10;
+  overflow-y: scroll;
 `
 
 const MapUnderClick = styled.div`
@@ -61,18 +63,9 @@ const MapUnderClick = styled.div`
   background-color: gray;
 `
 
-interface Data {
-  content: string;
-  address: string;
-}
-
 const KakaoMap = () => {
 
-  const [petShopName, setpetShopName] = useState('');
-  const [filterValue, setFilterValue] = useState('');
-  const [inView, setInView] = useState(false);
-  const [data, SetData] = useState<Data[]>([]);
-
+  // 임시 데이터
   const positions = [
     {
       content: '강아지호텔',
@@ -109,7 +102,20 @@ const KakaoMap = () => {
       address: '서울시 중랑구 면목본동',
       latlng: new window.kakao.maps.LatLng(37.5771378605923, 126.975025055354)
     },
+    
   ]
+
+  const [petShopName, setpetShopName] = useState('');
+  const [filterValue, setFilterValue] = useState('');
+  const [inView, setInView] = useState(false);
+  const [data, SetData] = useState<MapData[]>(positions);
+
+  // 검색시 해당 이름의 호텔,병원,카페 정보를 가져옴
+  const findContent = (text: string, content: MapData[]) => {
+    return content.filter(item => item.content.includes(text));
+  };
+
+  const memoizedFindContent = useMemo(() => findContent, []);
 
   useEffect(() => {
     //카카오 맵의 스타트 지점
@@ -193,11 +199,15 @@ const KakaoMap = () => {
     setFilterValue(e.target.value);
   };
 
+  // 내가 검색한 이름의 데이터 검색 후 추출
   const handleClickChange = () => {
+    const filteredContent = memoizedFindContent(filterValue, positions);
+    SetData(filteredContent);
     setpetShopName(filterValue)
     setFilterValue('');
   }
 
+  // Input 에서 Enter 하면 handleClickChange 실행
   const handleEnterChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if(e.key === 'Enter') handleClickChange();
   }
@@ -210,8 +220,12 @@ const KakaoMap = () => {
     setInView(!inView)
   }
 
+  // handleClickChange 랑 같은 동작 (버튼만 클릭해도 호텔,병원,카페 구분)
   const onSearch = (e:React.MouseEvent<HTMLButtonElement>) => {
-    setpetShopName(e.currentTarget.name)
+    const searchName = e.currentTarget.name;
+    const filteredContent = memoizedFindContent(searchName, positions);
+    SetData(filteredContent);
+    setpetShopName(searchName)
   }
 
   return (
@@ -233,6 +247,7 @@ const KakaoMap = () => {
       <div id="map" style={{ width: '100%', height: '80vh' }}></div>
       <MapUnderSearchContainer style={springProps}>
         <MapUnderClick onClick={onClick}></MapUnderClick>
+        {data.map((item, index)=> <p key={index}>{item.content}</p>)}
       </MapUnderSearchContainer>
     </KakaoMapContainer>
   )
