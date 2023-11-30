@@ -28,7 +28,7 @@ const KakaoMapSearchContainer = styled.div`
   margin-top: 10px;
   z-index: 10;
   input {
-    padding: 5px 10px;
+    padding: 10px;
     font-size: 20px;
     font-weight: bold;
     border: 1px solid black;
@@ -46,21 +46,47 @@ const KakaoMapSearchContainer = styled.div`
   }
 `
 
+const KategorieMap = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  margin-top: 50px;
+  z-index: 10;
+`
+
+const KategorieMapButton = styled.button`
+  margin: 5px;
+  padding: 15px;
+  background-color: white;
+  outline: none;
+  border: none;
+  border: 1px solid black;
+  cursor: pointer;
+`
+
 const MapUnderSearchContainer = styled(animated.div)`
   position: relative;
   height: 60vh;
   padding: 10px;
   background-color: white;
-  z-index: 10;
+  border-radius: 15px 15px 0px 0px;
   overflow-y: scroll;
+  z-index: 10;
 `
 
 const MapUnderClick = styled.div`
   width: 100px;
   height: 10px;
-  margin: 0 auto;
+  margin: 10px auto 30px;
   border-radius: 15px;
   background-color: gray;
+`
+
+const MapUnderBox = styled.div`
+  width: 90%;
+  height: 120px;
+  margin: 0px auto 20px;
+  background-color: aliceblue;
 `
 
 const KakaoMap = () => {
@@ -213,7 +239,7 @@ const KakaoMap = () => {
   }
 
   const springProps = useSpring({
-    transform: inView ? 'translateY(-450px)' : 'translateY(0px)'
+    transform: inView ? 'translateY(-400px)' : 'translateY(0px)'
   })
 
   const onClick = () => {
@@ -240,14 +266,17 @@ const KakaoMap = () => {
         />
         <button onClick={handleClickChange}><IoSearchOutline size={20}/></button>
       </KakaoMapSearchContainer>
-      <button onClick={onSearch} name="호텔"><FaHotel/></button>
-      <button onClick={onSearch} name="병원"><FaHospital/></button>
-      <button onClick={onSearch} name="카페"><IoCafe/></button>
+
+      <KategorieMap>
+        <KategorieMapButton onClick={onSearch} name="호텔"><FaHotel size={20}/></KategorieMapButton>
+        <KategorieMapButton onClick={onSearch} name="병원"><FaHospital size={20}/></KategorieMapButton>
+        <KategorieMapButton onClick={onSearch} name="카페"><IoCafe size={20}/></KategorieMapButton>
+      </KategorieMap>
 
       <div id="map" style={{ width: '100%', height: '80vh' }}></div>
       <MapUnderSearchContainer style={springProps}>
         <MapUnderClick onClick={onClick}></MapUnderClick>
-        {data.map((item, index)=> <p key={index}>{item.content}</p>)}
+        {data.map((item, index)=> <MapUnderBox key={index}>{item.content}</MapUnderBox>)}
       </MapUnderSearchContainer>
     </KakaoMapContainer>
   )

@@ -18,6 +18,10 @@ const FooterContainer = styled.div`
   z-index: 9999;
 `
 
+const FooterBox = styled.div`
+  text-align: center;
+`
+
 const FooterCenter = styled.div`
   position: relative;
   bottom: 30px;
@@ -32,15 +36,29 @@ const FooterCenter = styled.div`
 const Footer = () => {
   return ( 
     <FooterContainer>
-      <FaHome size={50}/>
-      <IoSearchOutline size={50}/>
+      <FooterBox>
+        <FaHome size={45}/>
+        <p>Home</p>
+      </FooterBox>
+      <FooterBox>
+        <IoSearchOutline size={45}/>
+        <p>Search</p>
+      </FooterBox>
       <FooterCenter>
         <Link to={'/kakaomap'}>
-          <FaMapMarkerAlt size={50}/>
+          <FaMapMarkerAlt size={45}/>
         </Link>
       </FooterCenter>
-      <MdPets size={50}/>
-      <CgProfile size={50}/>
+      <FooterBox>
+        <MdPets size={45}/>
+        <p>Animals</p>
+      </FooterBox>
+      <FooterBox>
+        <Link to={'/mypage'}>
+          <CgProfile size={45}/>
+          <p>MyPage</p>
+        </Link>
+      </FooterBox>
     </FooterContainer>
   );
 }
