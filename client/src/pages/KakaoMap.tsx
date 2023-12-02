@@ -86,7 +86,18 @@ const MapUnderBox = styled.div`
   width: 90%;
   height: 120px;
   margin: 0px auto 20px;
+  padding: 10px;
   background-color: aliceblue;
+  h1 {
+    padding: 10px 0px;
+    font-size: 24px;
+  }
+  h2 {
+    margin: 10px 0px;
+  }
+  p {
+    margin-top: 20px;
+  }
 `
 
 const KakaoMap = () => {
@@ -96,37 +107,44 @@ const KakaoMap = () => {
     {
       content: '강아지호텔',
       address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5712852402936, 126.974692588598)
+      latlng: new window.kakao.maps.LatLng(37.5712852402936, 126.974692588598),
+      phoneNumber: '010-0101-0101'
     },
     {
       content: '강아지2호텔',
       address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5708444878121, 126.979923668151)
+      latlng: new window.kakao.maps.LatLng(37.5708444878121, 126.979923668151),
+      phoneNumber: '010-0101-0101'
     },
     {
       content: '강아지병원',
       address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5771378605923, 126.972025055354)
+      latlng: new window.kakao.maps.LatLng(37.5771378605923, 126.972025055354),
+      phoneNumber: '010-0101-0101'
     },
     {
       content: '강아지2병원',
       address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5871378605923, 126.972025055354)
+      latlng: new window.kakao.maps.LatLng(37.5871378605923, 126.972025055354),
+      phoneNumber: '010-0101-0101'
     },
     {
       content: '강아지카페',
       address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5781378605923, 126.973025055354)
+      latlng: new window.kakao.maps.LatLng(37.5781378605923, 126.973025055354),
+      phoneNumber: '010-0101-0101'
     },
     {
       content: '강아지2카페',
       address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5701378605923, 126.974025055354)
+      latlng: new window.kakao.maps.LatLng(37.5701378605923, 126.974025055354),
+      phoneNumber: '010-0101-0101'
     },
     {
       content: '강아지22 카페',
       address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5771378605923, 126.975025055354)
+      latlng: new window.kakao.maps.LatLng(37.5771378605923, 126.975025055354),
+      phoneNumber: '010-0101-0101'
     },
     
   ]
@@ -276,7 +294,13 @@ const KakaoMap = () => {
       <div id="map" style={{ width: '100%', height: '80vh' }}></div>
       <MapUnderSearchContainer style={springProps}>
         <MapUnderClick onClick={onClick}></MapUnderClick>
-        {data.map((item, index)=> <MapUnderBox key={index}>{item.content}</MapUnderBox>)}
+        {data.map((item, index)=> 
+          <MapUnderBox key={index}>
+            <h1>{item.content}</h1>
+            <h2>{item.address}</h2>
+            <p>{item.phoneNumber}</p>
+          </MapUnderBox>
+        )}
       </MapUnderSearchContainer>
     </KakaoMapContainer>
   )

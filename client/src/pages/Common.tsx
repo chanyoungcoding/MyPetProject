@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 // 배경색(임시)
 const Main = styled.div`
-  background-color: antiquewhite;
 `
 
 const Common = () => {

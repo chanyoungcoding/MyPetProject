@@ -37,8 +37,10 @@ const Footer = () => {
   return ( 
     <FooterContainer>
       <FooterBox>
+      <Link to={'/'}>
         <FaHome size={45}/>
         <p>Home</p>
+      </Link>
       </FooterBox>
       <FooterBox>
         <IoSearchOutline size={45}/>
@@ -50,8 +52,10 @@ const Footer = () => {
         </Link>
       </FooterCenter>
       <FooterBox>
-        <MdPets size={45}/>
-        <p>Animals</p>
+        <Link to={'/information'}>
+          <MdPets size={45}/>
+          <p>Animals</p>
+        </Link>
       </FooterBox>
       <FooterBox>
         <Link to={'/mypage'}>
