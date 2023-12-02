@@ -15,8 +15,8 @@ function App() {
   return (
     <RecoilRoot>
       <Routes>
+        <Route path='/' element={<Home/>}/>
         <Route element={<Common/>}>
-          <Route path='/' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/kakaomap' element={<KakaoMap/>}/>
           <Route path='/mypage' element={<MyPage/>}/>
@@ -25,7 +25,6 @@ function App() {
           <Route path='/animalGrowth' element={<AnimalGrowth/>}/>
           <Route path='/animalTraining' element={<AnimalTraining/>}/>
           <Route path='/animalVaccinations' element={<AnimalVaccinations/>}/>
-
         </Route>
       </Routes>
     </RecoilRoot>
