@@ -6,7 +6,6 @@ import { FaHotel, FaHospital } from "react-icons/fa";
 import { useSpring, animated } from 'react-spring';
 
 import { MapData } from '../interface/interface';
-import './kakaompa.scss';
 
 declare global {
   interface Window {
