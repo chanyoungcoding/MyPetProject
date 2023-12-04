@@ -3,3 +3,52 @@
 h1, h2 {
   font-family: 'Pacifico'
 }
+
+// Home Loding
+
+.loader {
+  width: calc(6*30px);
+  height: 50px;
+  display: flex;
+  position: absolute;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgb(255, 124, 124);
+  filter: drop-shadow(30px 25px 0 currentColor) drop-shadow(60px 0 0 currentColor) drop-shadow(120px 0 0 currentColor);
+  clip-path: inset(0 100% 0 0);
+  animation: l12 2s infinite steps(7);
+}
+.loader:before {
+  content: "";
+  width: 30px;
+  height: 25px;
+  --c:no-repeat radial-gradient(farthest-side,currentColor 92%,#0000);
+  background: 
+    var(--c) left /70% 70%,
+    var(--c) right/20% 20%,
+    var(--c) top    0 right 15%/20% 20%,
+    var(--c) bottom 0 right 15%/20% 20%;
+}
+@keyframes l12 {
+  100% {clip-path: inset(0 -30px 0 0)}
+}
+
+//Common Loding 
+
+.commonloader {
+  width: 50px;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #B69EF5;
+  --_m: 
+    conic-gradient(#0000 10%,#000),
+    linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+  -webkit-mask-composite: source-out;
+          mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {to{transform: rotate(1turn)}}

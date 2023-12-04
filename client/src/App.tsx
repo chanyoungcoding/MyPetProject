@@ -16,8 +16,8 @@ function App() {
     <RecoilRoot>
       <Routes>
         <Route path='/' element={<Home/>}/>
+        <Route path='/login' element={<Login/>}/>
         <Route element={<Common/>}>
-          <Route path='/login' element={<Login/>}/>
           <Route path='/kakaomap' element={<KakaoMap/>}/>
           <Route path='/mypage' element={<MyPage/>}/>
           <Route path='/information' element={<Information/>}/>

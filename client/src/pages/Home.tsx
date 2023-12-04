@@ -35,6 +35,7 @@ const Home = () => {
   return ( 
     <HomeContainer>
       <h1>Our Pet</h1>
+      <div className="loader"></div>
       <img src={cat} alt="대표 이미지" />
     </HomeContainer>
   );
