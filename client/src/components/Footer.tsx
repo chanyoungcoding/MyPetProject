@@ -43,8 +43,10 @@ const Footer = () => {
       </Link>
       </FooterBox>
       <FooterBox>
-        <IoSearchOutline size={45}/>
-        <p>Search</p>
+        <Link to={'/search'}>
+          <IoSearchOutline size={45}/>
+          <p>Search</p>
+        </Link>
       </FooterBox>
       <FooterCenter>
         <Link to={'/kakaomap'}>

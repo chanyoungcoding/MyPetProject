@@ -12,6 +12,7 @@ import AnimalTraining from './pages/AnimalTraining';
 import AnimalVaccinations from './pages/AnimalVaccinations';
 import Main from './pages/Main';
 import AddProfile from './pages/AddProfile';
+import Search from './pages/Search';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path='/addprofile' element={<AddProfile/>}/>
           <Route path='/kakaomap' element={<KakaoMap/>}/>
           <Route path='/mypage' element={<MyPage/>}/>
+          <Route path='/search' element={<Search/>}/>
           <Route path='/information' element={<Information/>}/>
           <Route path='/animalDisease' element={<AnimalDisease/>}/>
           <Route path='/animalGrowth' element={<AnimalGrowth/>}/>
