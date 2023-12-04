@@ -10,6 +10,8 @@ import AnimalDisease from './pages/Animaldisease';
 import AnimalGrowth from './pages/AnimalGrowth';
 import AnimalTraining from './pages/AnimalTraining';
 import AnimalVaccinations from './pages/AnimalVaccinations';
+import Main from './pages/Main';
+import AddProfile from './pages/AddProfile';
 
 function App() {
   return (
@@ -18,6 +20,8 @@ function App() {
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route element={<Common/>}>
+          <Route path='/opet' element={<Main/>}/>
+          <Route path='/addprofile' element={<AddProfile/>}/>
           <Route path='/kakaomap' element={<KakaoMap/>}/>
           <Route path='/mypage' element={<MyPage/>}/>
           <Route path='/information' element={<Information/>}/>

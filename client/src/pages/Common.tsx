@@ -2,6 +2,8 @@ import { Outlet } from "react-router-dom";
 import Footer from "../components/Footer";
 import styled from "styled-components";
 
+import '../styles/common.scss';
+
 // 배경색(임시)
 const Main = styled.div`
 `
