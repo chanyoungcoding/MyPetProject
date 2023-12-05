@@ -3,6 +3,8 @@ import { IoSearchOutline } from "react-icons/io5";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 
+import SearchBackground from '../imgs/MainBackground.png';
+
 import Chocolate from '../imgs/chocolate.jpg';
 import Orange from '../imgs/fruit.jpg';
 import Onions from '../imgs/onions.jpg';
@@ -12,12 +14,14 @@ import Steaks from '../imgs/steaks.jpg';
 import 'swiper/css';
 
 const SearchContainer = styled.div`
-  width: 90%;
-  margin: 100px auto;
+  height: 95vh;
+  margin: 0px auto;
+  padding: 30px;
+  background: url(${SearchBackground}) no-repeat center/cover;
   p {
+    margin-top: 30px;
     font-size: 24px;
     font-weight: bold;
-    margin: 20px 0px;
   }
 `
 
@@ -26,6 +30,7 @@ const SearchInputContainer = styled.div`
   align-items: center;
   .searchicon {
     position: relative;
+    margin-top: 30px;
     left: -40px;
   }
 `
@@ -37,6 +42,7 @@ const SearchInput = styled.input`
   outline: none;
   border: none;
   border-radius: 15px;
+  margin-top: 30px;
   padding: 10px 60px 10px 20px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `
@@ -63,15 +69,15 @@ const SwiperContainer = styled.div`
 `
 
 const SwiperInner = styled.div`
-  width: 150px;
-  height: 150px;
-  background: url(${props => props.property}) no-repeat center/cover;
-  background-color: black;
+  width: 135px;
+  height: 135px;
+  background: linear-gradient(to left, rgba(0,0,0, 0.4), rgba(0,0,0,0.4)), url(${props => props.property}) no-repeat center/cover;
   border-radius: 10px;
   color: ${props => props.color || 'white'};
   p {
-    margin: 0;
-    padding: 40px 10px;
+    padding: 40px 5px;
+    text-align: center;
+    line-height: 30px;
   }
 `
 
@@ -105,27 +111,27 @@ const Search = () => {
         >
           <SwiperSlide>
             <SwiperInner property={Chocolate}>
-              <p>초콜릿은 절대 안돼요!!</p>
+              <p>초콜릿은 절대<br/> 안돼요!!</p>
             </SwiperInner>
           </SwiperSlide>
           <SwiperSlide>
             <SwiperInner property={Orange}>
-              <p>과육은 OK, 껍질과 하얀 섬유질은 NO</p>
+              <p>과육은 OK,<br/> 껍질은 NO</p>
             </SwiperInner>
           </SwiperSlide>
           <SwiperSlide>
             <SwiperInner property={Onions}>
-              <p>강아지의 적혈구를 파괴을 파괴해요!!</p>
+              <p>강아지의 적혈구를 파괴해요!!</p>
             </SwiperInner>
           </SwiperSlide>
           <SwiperSlide>
             <SwiperInner property={Potato}>
-              <p>다양한 영양소 덕분에 좋아요!!</p>
+              <p>다양한 영양소<br/> 덕분에 좋아요</p>
             </SwiperInner>
           </SwiperSlide>
           <SwiperSlide>
             <SwiperInner property={Steaks}>
-              <p>강아지들의 기력 보충</p>
+              <p>강아지들의<br/> 기력 보충</p>
             </SwiperInner>
           </SwiperSlide>
 

@@ -3,11 +3,12 @@ import styled from 'styled-components';
 
 import '../styles/home.scss';
 import cat from '../imgs/고양이.png';
+import HomeBackground from '../imgs/MainBackground.png';
 
 const HomeContainer = styled.div`
   position: relative;
   height: 100vh;
-  background-color: #B69EF5;
+  background: url(${HomeBackground}) no-repeat center/cover;
   text-align: center;
   h1 {
     position: relative;
