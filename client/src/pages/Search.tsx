@@ -1,5 +1,15 @@
 import styled from "styled-components";
 import { IoSearchOutline } from "react-icons/io5";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay } from 'swiper/modules';
+
+import Chocolate from '../imgs/chocolate.jpg';
+import Orange from '../imgs/fruit.jpg';
+import Onions from '../imgs/onions.jpg';
+import Potato from '../imgs/potato.jpg';
+import Steaks from '../imgs/steaks.jpg';
+
+import 'swiper/css';
 
 const SearchContainer = styled.div`
   width: 90%;
@@ -30,6 +40,41 @@ const SearchInput = styled.input`
   padding: 10px 60px 10px 20px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `
+
+const RecommendBox = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+`
+
+const RecommendSearch = styled.p`
+  flex-basis: 140px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+`
+
+const SwiperContainer = styled.div`
+  margin-top: 100px;
+`
+
+const SwiperInner = styled.div`
+  width: 150px;
+  height: 150px;
+  background: url(${props => props.property}) no-repeat center/cover;
+  background-color: black;
+  border-radius: 10px;
+  color: ${props => props.color || 'white'};
+  p {
+    margin: 0;
+    padding: 40px 10px;
+  }
+`
+
 const Search = () => {
   return ( 
     <SearchContainer>
@@ -40,15 +85,52 @@ const Search = () => {
       </SearchInputContainer>
 
       <p>추천 검색어</p>
-      <div>
-        <div><p>#양파</p></div>
-        <div><p>#감자</p></div>
-        <div><p>#오징어</p></div>
-      </div>
-      <div>
-        <div>hello</div>
-        <div>hello</div>
-      </div>
+      <RecommendBox>
+        <RecommendSearch>#양파</RecommendSearch>
+        <RecommendSearch>#감자</RecommendSearch>
+        <RecommendSearch>#오징어</RecommendSearch>
+      </RecommendBox>
+
+      <SwiperContainer>
+        <Swiper
+          modules={[Autoplay]}
+          spaceBetween={50}
+          slidesPerView={2}
+          navigation
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
+          loop={true}
+        >
+          <SwiperSlide>
+            <SwiperInner property={Chocolate}>
+              <p>초콜릿은 절대 안돼요!!</p>
+            </SwiperInner>
+          </SwiperSlide>
+          <SwiperSlide>
+            <SwiperInner property={Orange}>
+              <p>과육은 OK, 껍질과 하얀 섬유질은 NO</p>
+            </SwiperInner>
+          </SwiperSlide>
+          <SwiperSlide>
+            <SwiperInner property={Onions}>
+              <p>강아지의 적혈구를 파괴을 파괴해요!!</p>
+            </SwiperInner>
+          </SwiperSlide>
+          <SwiperSlide>
+            <SwiperInner property={Potato}>
+              <p>다양한 영양소 덕분에 좋아요!!</p>
+            </SwiperInner>
+          </SwiperSlide>
+          <SwiperSlide>
+            <SwiperInner property={Steaks}>
+              <p>강아지들의 기력 보충</p>
+            </SwiperInner>
+          </SwiperSlide>
+
+        </Swiper>
+      </SwiperContainer>
     </SearchContainer>
   );
 }
