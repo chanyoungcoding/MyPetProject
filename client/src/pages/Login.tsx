@@ -2,6 +2,12 @@ import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import LoginPet from '../imgs/loginImage.png';
 
+import LoginBackground from '../imgs/MainBackground.png';
+
+const LoginContainer = styled.div`
+  background: url(${LoginBackground}) no-repeat center/cover;
+`
+
 const LoginIntro = styled.h1`
   display: flex;
   align-items: center;
@@ -60,7 +66,7 @@ const Login = () => {
     })
   }
   return ( 
-    <div className="login">
+    <LoginContainer>
       <LoginIntro>Hi Welcome</LoginIntro>
       <InputContainer>
         <img src={LoginPet} alt="petImage" />
@@ -79,7 +85,7 @@ const Login = () => {
         <button>로그인</button>
         <button>회원가입</button>
       </InputContainer>
-    </div>
+    </LoginContainer>
   );
 }
 

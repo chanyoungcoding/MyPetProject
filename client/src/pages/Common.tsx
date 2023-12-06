@@ -4,8 +4,11 @@ import styled from "styled-components";
 
 import '../styles/common.scss';
 
+import MainBackground from '../imgs/MainBackground.png';
+
 // 배경색(임시)
 const Main = styled.div`
+  background: url(${MainBackground});
 `
 
 const Common = () => {
