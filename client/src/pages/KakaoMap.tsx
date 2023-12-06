@@ -6,6 +6,7 @@ import { FaHotel, FaHospital } from "react-icons/fa";
 import { useSpring, animated } from 'react-spring';
 
 import { MapData } from '../interface/interface';
+import { useApiPetMapData } from "../services/api";
 
 declare global {
   interface Window {
@@ -101,57 +102,23 @@ const MapUnderBox = styled.div`
 
 const KakaoMap = () => {
 
-  // 임시 데이터
-  const positions = [
-    {
-      content: '강아지호텔',
-      address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5712852402936, 126.974692588598),
-      phoneNumber: '010-0101-0101'
-    },
-    {
-      content: '강아지2호텔',
-      address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5708444878121, 126.979923668151),
-      phoneNumber: '010-0101-0101'
-    },
-    {
-      content: '강아지병원',
-      address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5771378605923, 126.972025055354),
-      phoneNumber: '010-0101-0101'
-    },
-    {
-      content: '강아지2병원',
-      address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5871378605923, 126.972025055354),
-      phoneNumber: '010-0101-0101'
-    },
-    {
-      content: '강아지카페',
-      address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5781378605923, 126.973025055354),
-      phoneNumber: '010-0101-0101'
-    },
-    {
-      content: '강아지2카페',
-      address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5701378605923, 126.974025055354),
-      phoneNumber: '010-0101-0101'
-    },
-    {
-      content: '강아지22 카페',
-      address: '서울시 중랑구 면목본동',
-      latlng: new window.kakao.maps.LatLng(37.5771378605923, 126.975025055354),
-      phoneNumber: '010-0101-0101'
-    },
-    
-  ]
+  const PetMapDB = 'http://localhost:4000/petMap';
+
+  const { data } = useApiPetMapData(PetMapDB);
+
+  const positions = useMemo(() => {
+    return data?.map(item => ({
+      content: item.buildingName,
+      address: item.address,
+      phoneNumber: item.phoneNumber || '',
+      latlng: new window.kakao.maps.LatLng(item.latitude, item.longitude)
+    })) || [];
+  }, [data]);
 
   const [petShopName, setpetShopName] = useState('');
   const [filterValue, setFilterValue] = useState('');
   const [inView, setInView] = useState(false);
-  const [data, SetData] = useState<MapData[]>(positions);
+  const [item, SetItem] = useState<MapData[] | null>(null);
 
   // 검색시 해당 이름의 호텔,병원,카페 정보를 가져옴
   const findContent = (text: string, content: MapData[]) => {
@@ -159,6 +126,11 @@ const KakaoMap = () => {
   };
 
   const memoizedFindContent = useMemo(() => findContent, []);
+
+  // 초기 렌더링시 하단 정보 표시
+  useEffect(() => {
+    SetItem(positions);
+  }, [data])
 
   useEffect(() => {
     //카카오 맵의 스타트 지점
@@ -223,7 +195,7 @@ const KakaoMap = () => {
       for (let i = 0; i < positions.length; i++) {
         const content = positions[i].content;
         
-        if (Array.from(petShopName).some(char => content.startsWith(char))) {
+        if (content.includes(petShopName)) {
           return positions[i].latlng;
         }
       }
@@ -236,6 +208,7 @@ const KakaoMap = () => {
     if(resultLatLng) {
       map.setCenter(resultLatLng)
     }
+
   }, [petShopName, positions]);
 
   const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -245,7 +218,7 @@ const KakaoMap = () => {
   // 내가 검색한 이름의 데이터 검색 후 추출
   const handleClickChange = () => {
     const filteredContent = memoizedFindContent(filterValue, positions);
-    SetData(filteredContent);
+    SetItem(filteredContent);
     setpetShopName(filterValue)
     setFilterValue('');
   }
@@ -267,9 +240,11 @@ const KakaoMap = () => {
   const onSearch = (e:React.MouseEvent<HTMLButtonElement>) => {
     const searchName = e.currentTarget.name;
     const filteredContent = memoizedFindContent(searchName, positions);
-    SetData(filteredContent);
+    SetItem(filteredContent);
     setpetShopName(searchName)
   }
+
+  
 
   return (
     <KakaoMapContainer>
@@ -293,13 +268,13 @@ const KakaoMap = () => {
       <div id="map" style={{ width: '100%', height: '80vh' }}></div>
       <MapUnderSearchContainer style={springProps}>
         <MapUnderClick onClick={onClick}></MapUnderClick>
-        {data.map((item, index)=> 
+        {item?.map((item, index)=> 
           <MapUnderBox key={index}>
             <h1>{item.content}</h1>
             <h2>{item.address}</h2>
             <p>{item.phoneNumber}</p>
           </MapUnderBox>
-        )}
+        ) }
       </MapUnderSearchContainer>
     </KakaoMapContainer>
   )
