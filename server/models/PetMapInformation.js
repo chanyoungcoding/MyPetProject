@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 const MapInformationSchema = new mongoose.Schema({
-  content: String,
+  name: String,
+  buildingName: String,
   address: String,
   latitude: Number,
   longitude: Number,
