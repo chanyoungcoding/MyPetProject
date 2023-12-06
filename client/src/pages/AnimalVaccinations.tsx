@@ -50,8 +50,8 @@ const AnimalVaccinations = () => {
           <h1>코로나바이러스성 장염</h1>
         </VaccinationBoxTop>
         <VaccinationBoxBottom>
-          <li>기초접종 : 생후 6 ~ 8주에 1차 접종</li>
-          <li>추가접종 : 1차 접종 후 2 ~ 4주 간격으로 1 ~ 2회</li>
+          <li>기초접종 : 생후 6~8주에 1차 접종</li>
+          <li>추가접종 : 1차 접종 후 2~4주 간격으로 1~2회</li>
           <li>보강접종 : 추가접종 후 매년 1회 주사</li>
         </VaccinationBoxBottom>
       </VaccinationBox>
@@ -60,8 +60,8 @@ const AnimalVaccinations = () => {
           <h1>기관ㆍ기관지염</h1>
         </VaccinationBoxTop>
         <VaccinationBoxBottom>
-          <li>기초접종 : 생후 6 ~ 8주에 1차 접종</li>
-          <li>추가접종 : 1차 접종 후 2 ~ 4주 간격으로 1 ~ 2회</li>
+          <li>기초접종 : 생후 6~8주에 1차 접종</li>
+          <li>추가접종 : 1차 접종 후 2~4주 간격으로 1~2회</li>
           <li>보강접종 : 추가접종 후 매년 1회 주사</li>
         </VaccinationBoxBottom>
       </VaccinationBox>

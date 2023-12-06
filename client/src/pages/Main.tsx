@@ -3,7 +3,7 @@ import AddButton from '../imgs/add.png';
 import { Link } from "react-router-dom";
 
 const MainContainer = styled.div`
-  height: 92vh;
+  height: 95vh;
   display: flex;
   justify-content: center;
   align-items: center;

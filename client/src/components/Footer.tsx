@@ -37,7 +37,7 @@ const Footer = () => {
   return ( 
     <FooterContainer>
       <FooterBox>
-      <Link to={'/'}>
+      <Link to={'/opet'}>
         <FaHome size={45}/>
         <p>Home</p>
       </Link>
