@@ -5,6 +5,7 @@ import styled from "styled-components";
 import '../styles/common.scss';
 
 import MainBackground from '../imgs/MainBackground.png';
+import Navbar from "../components/Navbar";
 
 // 배경색
 const Main = styled.div`
@@ -14,6 +15,7 @@ const Main = styled.div`
 const Common = () => {
   return ( 
     <Main>
+      <Navbar/>
       <div className="container">
         <Outlet/>
       </div>

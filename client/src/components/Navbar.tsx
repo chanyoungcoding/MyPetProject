@@ -1,6 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
 import { FaArrowLeft } from "react-icons/fa";
+import styled from "styled-components";
+
+const NavbarContainer = styled.div`
+  position: absolute;
+  .backbutton {
+    margin: 10px;
+  }
+`
 
 const Navbar = () => {
 
@@ -11,9 +19,9 @@ const Navbar = () => {
   }
 
   return ( 
-    <div className="navbar">
-      <FaArrowLeft onClick={onClickBack} size={25}/>
-    </div>
+    <NavbarContainer>
+      <FaArrowLeft className="backbutton" onClick={onClickBack} size={25}/>
+    </NavbarContainer>
   );
 }
 
