@@ -5,11 +5,9 @@ import Growth3 from '../imgs/growth3.png';
 import Growth4 from '../imgs/growth4.png';
 import Growth5 from '../imgs/growth5.png';
 
-import GrowthBackground from '../imgs/MainBackground.png';
 
 const GrowthContainer = styled.div`
   height: 100vh;
-  background: url(${GrowthBackground});
   padding: 15px;
   h1 {
     padding-bottom: 10px;

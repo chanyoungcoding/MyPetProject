@@ -1,15 +1,6 @@
 import axios from 'axios';
 import { useQuery } from 'react-query';
-
-interface PetMapData {
-  번호: number;
-  Name: string;
-  buildingName: string;
-  address: string;
-  phoneNumber: string | undefined;
-  latitude: number;
-  longitude: number; 
-}
+import { PetMapData } from '../interface/interface';
 
 export function useApiPetMapData(url:string) {
   const {data, isLoading, isError} = useQuery<PetMapData[]>({ 

@@ -5,8 +5,8 @@ import { IoSearchOutline, IoCafe } from "react-icons/io5";
 import { FaHotel, FaHospital } from "react-icons/fa";
 import { useSpring, animated } from 'react-spring';
 
-import { MapData } from '../interface/interface';
 import { useApiPetMapData } from "../services/api";
+import { PositionData } from "../interface/interface";
 
 declare global {
   interface Window {
@@ -118,10 +118,10 @@ const KakaoMap = () => {
   const [petShopName, setpetShopName] = useState('');
   const [filterValue, setFilterValue] = useState('');
   const [inView, setInView] = useState(false);
-  const [item, SetItem] = useState<MapData[] | null>(null);
+  const [item, SetItem] = useState<PositionData[] | null>(null);
 
   // 검색시 해당 이름의 호텔,병원,카페 정보를 가져옴
-  const findContent = (text: string, content: MapData[]) => {
+  const findContent = (text: string, content: PositionData[]) => {
     return content.filter(item => item.content.includes(text));
   };
 
