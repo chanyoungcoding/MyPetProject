@@ -12,6 +12,8 @@ import Potato from '../imgs/potato.jpg';
 import Steaks from '../imgs/steaks.jpg';
 
 import 'swiper/css';
+import { ChangeEvent, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const SearchContainer = styled.div`
   height: 95vh;
@@ -82,12 +84,29 @@ const SwiperInner = styled.div`
 `
 
 const Search = () => {
+
+  const navigate = useNavigate();
+
+  const [search, setSearch] = useState('');
+
+  const onSearch = () => {
+    navigate(`/search/${search}`)
+  }
+
+  const handleInputChange = (e:ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if(e.key === 'Enter') onSearch();
+  }
+
   return ( 
     <SearchContainer>
       <p>어떤 음식이 강아지에게<br/>안전한지 궁금하시죠?</p>
       <SearchInputContainer>
-        <SearchInput type="text"/>
-        <IoSearchOutline className="searchicon" size={35}/>
+        <SearchInput type="text" value={search} onChange={handleInputChange} onKeyDown={handleKeyDown}/>
+        <IoSearchOutline className="searchicon" size={35} onClick={onSearch}/>
       </SearchInputContainer>
 
       <p>추천 검색어</p>

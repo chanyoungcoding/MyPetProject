@@ -58,30 +58,37 @@ const DetailIntro = styled.p`
   line-height: 35px;
 `
 
+const NoInformation = styled.p`
+  padding-top: 200px;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+`
+
 const SearchDetail = () => {
+
 
   const {name} = useParams();
   const PetFoodDB = 'http://localhost:4000/pet-foods';
 
   const { data } = useApiPetFoodData(PetFoodDB, name);
-  console.log("🚀 ~ file: SearchDetail.tsx:67 ~ SearchDetail ~ data:", data)
 
   return ( 
     <>
     <DetailTopContainer/>
     <DetailContainer>
-      {data?.map(item => 
-        <>
-          <DetailHeader key={item.name}>
+      {data && data?.length >= 1 ? data?.map(item => 
+        <div key={item.name}>
+          <DetailHeader>
             <img src={TestDog} alt="등록된 강아지" />
             <div></div>
-            <h1>{item.name}은 {item.eat}.</h1>
+            <h1>{item.name} {item.eat}.</h1>
           </DetailHeader>
           <DetailIntro>
             {item.introduce}
           </DetailIntro>
-        </>
-      )}
+        </div>
+      ) : <NoInformation key='noInformation'>해당 정보가 없습니다.</NoInformation>}
     </DetailContainer>
     </>
   );

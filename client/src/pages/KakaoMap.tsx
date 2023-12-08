@@ -1,5 +1,5 @@
 /* eslint-disable */
-import { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
 import { IoSearchOutline, IoCafe } from "react-icons/io5";
 import { FaHotel, FaHospital } from "react-icons/fa";
@@ -192,11 +192,15 @@ const KakaoMap = () => {
 
     // 검색 매점 이름의 좌표 찾기
     const findLatLngByFirstLetter = (positions:any, petShopName:string) => {
-      for (let i = 0; i < positions.length; i++) {
-        const content = positions[i].content;
-        
-        if (content.includes(petShopName)) {
-          return positions[i].latlng;
+      // 초기 실행시 petShopName 이 없어도 실행되는 문제 방지
+      if(petShopName.length >= 1) {
+        for (let i = 0; i < positions.length; i++) {
+          const content = positions[i].content;
+          
+          if (content.includes(petShopName)) {
+            console.log(positions[i].content)
+            return positions[i].latlng;
+          }
         }
       }
       return null;
@@ -220,12 +224,13 @@ const KakaoMap = () => {
     const filteredContent = memoizedFindContent(filterValue, positions);
     SetItem(filteredContent);
     setpetShopName(filterValue)
-    setFilterValue('');
   }
 
   // Input 에서 Enter 하면 handleClickChange 실행
   const handleEnterChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if(e.key === 'Enter') handleClickChange();
+    if(e.key === 'Enter') {
+      handleClickChange();
+    }
   }
 
   const springProps = useSpring({
