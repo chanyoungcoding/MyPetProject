@@ -14,3 +14,9 @@ export interface PositionData {
   phoneNumber: string;
   latlng: any;
 }
+
+export interface PetFoodData {
+  name: string;
+  introduce: string;
+  eat: string;
+}

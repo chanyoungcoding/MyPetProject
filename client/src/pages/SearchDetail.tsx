@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import ChocolateImg from '../imgs/chocolate.jpg';
 import TestDog from '../imgs/loginImage.png';
+import { useApiPetFoodData } from "../services/api";
 
 const DetailTopContainer = styled.div`
   height: 20vh;
@@ -60,23 +61,27 @@ const DetailIntro = styled.p`
 const SearchDetail = () => {
 
   const {name} = useParams();
+  const PetFoodDB = 'http://localhost:4000/pet-foods';
+
+  const { data } = useApiPetFoodData(PetFoodDB, name);
+  console.log("🚀 ~ file: SearchDetail.tsx:67 ~ SearchDetail ~ data:", data)
 
   return ( 
     <>
     <DetailTopContainer/>
     <DetailContainer>
-      <DetailHeader>
-        <img src={TestDog} alt="등록된 강아지" />
-        <div></div>
-        <h1>초콜릿은 치명적이에요.</h1>
-      </DetailHeader>
-      <DetailIntro>
-        초콜릿이 개에게 매우 유독하다는 것은 충분히 입증된 사실입니다. 
-        초콜릿에는 개의 대사 과정을 
-        방해하는 자극제인 테오브로민이 함유되어 있습니다.  
-        먹은 양에 따라 위장 장애, 
-        심장 문제, 발작이 생기거나 심지어 죽을 수도 있습니다.
-      </DetailIntro>
+      {data?.map(item => 
+        <>
+          <DetailHeader key={item.name}>
+            <img src={TestDog} alt="등록된 강아지" />
+            <div></div>
+            <h1>{item.name}은 {item.eat}.</h1>
+          </DetailHeader>
+          <DetailIntro>
+            {item.introduce}
+          </DetailIntro>
+        </>
+      )}
     </DetailContainer>
     </>
   );

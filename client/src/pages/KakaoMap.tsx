@@ -102,7 +102,7 @@ const MapUnderBox = styled.div`
 
 const KakaoMap = () => {
 
-  const PetMapDB = 'http://localhost:4000/petMap';
+  const PetMapDB = 'http://localhost:4000/pet-maps';
 
   const { data } = useApiPetMapData(PetMapDB);
 

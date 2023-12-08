@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 require("dotenv").config();
 
 const PetMap = require('./models/PetMapInformation');
+const PetFoodInformation = require('./models/PetPossibleFood');
 
 //MongoDB 연결
 const dbUrl = process.env.DB;
@@ -22,9 +23,15 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/petMap', async (req,res) => {
+app.get('/pet-maps', async (req,res) => {
   const petMapInformation = await PetMap.find({})
   res.json(petMapInformation);
+})
+
+app.get('/pet-foods', async (req,res) => {
+  const name = req.query.name
+  const petFoodInformation = await PetFoodInformation.find({name: name});
+  res.json(petFoodInformation);
 })
 
 const PORT = process.env.PORT;

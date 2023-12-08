@@ -9,6 +9,6 @@ const MapInformationSchema = new mongoose.Schema({
   phoneNumber: String
 })
 
-const MapInformation = mongoose.model('MapInformation', MapInformationSchema);
+const MapInforModel = mongoose.model('MapInformation', MapInformationSchema);
 
-module.exports = MapInformation;
+module.exports = MapInforModel;
