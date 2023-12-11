@@ -1,7 +1,8 @@
 import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
-import LoginPet from '../imgs/loginImage.png';
+import { LuUser, LuLock } from "react-icons/lu";
 
+import LoginPet from '../imgs/loginImage.png';
 import LoginBackground from '../imgs/MainBackground.png';
 
 const LoginContainer = styled.div`
@@ -27,15 +28,6 @@ const InputContainer = styled.div`
   background-color: white;
   border-radius: 30px 30px 0px 0px;
   border-top: 3px solid black;
-  input {
-    width: 240px;
-    margin-bottom: 30px;
-    padding: 10px 30px 10px 5px;
-    font-size: 24px;
-    border: none;
-    border-bottom: 1px solid black;
-    outline: none;
-  }
   button {
     width: 200px;
     margin: 10px;
@@ -43,16 +35,34 @@ const InputContainer = styled.div`
     outline: none;
     border: none;
     border-radius: 15px;
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 20px;
     color: white;
-    background-color: #74CDFF;
+    background: linear-gradient(90deg, rgba(134,166,227,1) 0%, rgba(157,159,235,1) 63%, rgba(156,126,238,1) 100%);
     cursor: pointer;
   }
   img {
     position: absolute;
     top: -165px;
     right: 10px;
+  }
+`
+
+const InputBox = styled.div`
+  position: relative;
+  input {
+    width: 240px;
+    margin-bottom: 30px;
+    padding: 10px 10px 10px 50px;
+    font-size: 24px;
+    background-color: #9091E9;
+    border-radius: 15px;
+    border: none;
+    outline: none;
+  }
+  .inputicon {
+    position: absolute;
+    top: 8px;
+    padding-left: 10px;
   }
 `
 
@@ -70,20 +80,26 @@ const Login = () => {
       <LoginIntro>Hi Welcome</LoginIntro>
       <InputContainer>
         <img src={LoginPet} alt="petImage" />
-        <input 
-          type="text" 
-          placeholder="username" 
-          onChange={onChange} 
-          name="username" 
-        />
-        <input
-          type="text" 
-          placeholder="password" 
-          onChange={onChange} 
-          name="password" 
-        />
-        <button>로그인</button>
-        <button>회원가입</button>
+        <InputBox>
+          <LuUser className="inputicon" size={30}/>
+          <input 
+            type="text" 
+            placeholder="Name" 
+            onChange={onChange} 
+            name="username" 
+          />
+        </InputBox>
+        <InputBox>
+          <LuLock className="inputicon" size={30}/>
+          <input
+            type="text" 
+            placeholder="Password" 
+            onChange={onChange} 
+            name="password" 
+          />
+        </InputBox>
+        <button>Log In</button>
+        <button>Sign Up</button>
       </InputContainer>
     </LoginContainer>
   );
