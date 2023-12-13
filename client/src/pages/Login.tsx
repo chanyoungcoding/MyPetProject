@@ -4,6 +4,9 @@ import { LuUser, LuLock } from "react-icons/lu";
 
 import LoginPet from '../imgs/loginImage.png';
 import LoginBackground from '../imgs/MainBackground.png';
+import { Link } from "react-router-dom";
+import { useLoginMutation } from "../services/api";
+import { UserLoginData } from "../interface/interface";
 
 const LoginContainer = styled.div`
   background: url(${LoginBackground}) no-repeat center/cover;
@@ -67,14 +70,22 @@ const InputBox = styled.div`
 `
 
 const Login = () => {
-  const [data, setData] = useState({username:'',password:''})
+  const [user, setUser] = useState({username:'',password:''})
+
+  const { mutate } = useLoginMutation();
+
+  const handleLogin = () => {
+    const data:UserLoginData = user;
+    mutate(data)
+  }
 
   const onChange = (e:ChangeEvent<HTMLInputElement>) => {
-    setData({
-      ...data,
+    setUser({
+      ...user,
       [e.currentTarget.name]: e.target.value
     })
   }
+
   return ( 
     <LoginContainer>
       <LoginIntro>Hi Welcome</LoginIntro>
@@ -98,8 +109,10 @@ const Login = () => {
             name="password" 
           />
         </InputBox>
-        <button>Log In</button>
-        <button>Sign Up</button>
+        <button onClick={handleLogin}>Log In</button>
+        <Link to={'/register'}>
+          <button>Sign Up</button>
+        </Link>
       </InputContainer>
     </LoginContainer>
   );

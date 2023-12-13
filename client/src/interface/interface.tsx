@@ -20,3 +20,11 @@ export interface PetFoodData {
   introduce: string;
   eat: string;
 }
+
+export interface UserRegisterData {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export type UserLoginData = Omit<UserRegisterData, 'email'>;

@@ -15,6 +15,7 @@ import AddProfile from './pages/AddProfile';
 import Search from './pages/Search';
 import SearchDetail from './pages/SearchDetail';
 import Test from './pages/Test';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/register' element={<Register/>}/>
         <Route element={<Common/>}>
           <Route path='/opet' element={<Main/>}/>
           <Route path='/addprofile' element={<AddProfile/>}/>
