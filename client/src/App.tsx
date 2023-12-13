@@ -14,6 +14,7 @@ import Main from './pages/Main';
 import AddProfile from './pages/AddProfile';
 import Search from './pages/Search';
 import SearchDetail from './pages/SearchDetail';
+import Test from './pages/Test';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path='/animalGrowth' element={<AnimalGrowth/>}/>
           <Route path='/animalTraining' element={<AnimalTraining/>}/>
           <Route path='/animalVaccinations' element={<AnimalVaccinations/>}/>
+          <Route path='/Test' element={<Test/>}/>
         </Route>
       </Routes>
     </RecoilRoot>
