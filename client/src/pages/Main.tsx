@@ -71,7 +71,7 @@ const Main = () => {
           </PetContainer>
         ) : (
           <>
-          <Linkto to={'/addprofile'}/>
+          <Linkto to={'/test'}/>
           <p>반려동물을 등록해 보세요.</p>
           </>
         )}

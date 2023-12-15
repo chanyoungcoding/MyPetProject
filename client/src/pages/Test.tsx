@@ -1,10 +1,7 @@
-import Test2 from "./Test2";
+import Test2 from "./RegisterImg";
 
 const Test = () => {
-  // const jwt = Cookies.get('jwt');
 
-  // const url = 'http://localhost:4000/test';
-  // const { data } = useTest(url, jwt);
 
   return ( 
     <Test2/>
