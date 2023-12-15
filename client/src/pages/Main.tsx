@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import AddButton from '../imgs/add.png';
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import { useApiUserData } from "../services/api";
 
 const MainContainer = styled.div`
   height: 95vh;
@@ -9,12 +11,6 @@ const MainContainer = styled.div`
   align-items: center;
 `
 
-const Linkto = styled(Link)`
-  width: 150px;
-  height: 150px;
-  background: url(${AddButton}) no-repeat center/cover;
-  cursor: pointer;
-`
 const MainInstallPetBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -26,12 +22,40 @@ const MainInstallPetBox = styled.div`
   }
 `
 
+const PetBox = styled.div`
+  width: 150px;
+  height: 150px;
+  background: url(${props => props.property}) no-repeat center/cover;
+  border-radius: 100%;
+`
+
+const Linkto = styled(Link)`
+  width: 150px;
+  height: 150px;
+  background: url(${AddButton}) no-repeat center/cover;
+  cursor: pointer;
+`
+
+
 const Main = () => {
+  const user = Cookies.get('jwt');
+  const userDB = 'http://localhost:4000/pet-users';
+
+  const { data } = useApiUserData(userDB, user);
+
   return ( 
     <MainContainer>
       <MainInstallPetBox>
-        <Linkto to={'/addprofile'}/>
-        <p>반려동물을 등록해 보세요.</p>
+        {data && data[0].img ? (
+          <>
+            <PetBox property={data[0].img}></PetBox>
+          </>
+        ) : (
+          <>
+          <Linkto to={'/addprofile'}/>
+          <p>반려동물을 등록해 보세요.</p>
+          </>
+        )}
       </MainInstallPetBox>
     </MainContainer>
   );

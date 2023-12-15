@@ -26,6 +26,12 @@ export interface UserRegisterData {
   email: string;
   password: string;
 }
+export interface UserData {
+  username: string;
+  email: string;
+  password: string;
+  img: string | undefined;
+}
 
 export type UserLoginData = Omit<UserRegisterData, 'email'>;
 

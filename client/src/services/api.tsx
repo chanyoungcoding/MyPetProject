@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useMutation, useQuery } from 'react-query';
-import { PetMapData, PetFoodData, UserRegisterData, UserLoginData, ImgRegisterData } from '../interface/interface';
+import { PetMapData, PetFoodData, UserRegisterData, UserLoginData, ImgRegisterData, UserData } from '../interface/interface';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -24,12 +24,22 @@ export function useApiPetFoodData(url:string, name:string | undefined) {
   return {data, isLoading, isError }
 }
 
+export function useApiUserData(url:string, name:string | undefined) {
+  const {data, isLoading, isError} = useQuery<UserData[]>({ 
+    queryKey: ['UserData'], 
+    queryFn: async () => {
+      const response = await axios.get(`${url}?name=${name}`);
+      return response.data;
+  }})
+  return {data, isLoading, isError }
+}
+
 export const useImgRegisterMutation = () => {
   return useMutation({
     mutationFn: async (data: ImgRegisterData) => await axios.post('http://localhost:4000/pet-img-register', data),
     mutationKey: 'ImgRegister',
     onSuccess: (e) => {
-      console.log(e);
+      alert(e.data.message)
     },
     onError: (e) => {
       console.log(e)

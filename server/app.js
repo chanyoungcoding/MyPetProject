@@ -57,12 +57,27 @@ app.get('/pet-foods', async (req,res) => {
   res.json(petFoodInformation);
 })
 
+app.get('/pet-users', async (req,res) => {
+  const jwtToken = req.query.name
+  const {username} = jwt.verify(jwtToken, secretKey);
+  const user = await User.find({username: username});
+  res.json(user);
+})
+
 app.post('/pet-img-register', async (req,res) => {
   const jwtToken = req.body.jwt;
   const imageUrl = req.body.imageUrl;
   const {username} = jwt.verify(jwtToken, secretKey);
-  const user = await User.find({username : username});
-  res.send('good')
+  const updatedUser = await User.findOneAndUpdate(
+    { username: username },
+    { $set: { img: imageUrl } },
+    { new: true } 
+  );
+  if (updatedUser) {
+    res.json({ success: true, message: '이미지를 등록했습니다.' });
+  } else {
+    res.json({ success: false, message: '사용자를 찾을 수 없습니다.' });
+  }
 })
 
 app.post('/login', passport.authenticate('local'), (req,res) => {
