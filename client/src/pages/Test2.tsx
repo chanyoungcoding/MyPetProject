@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import { FaPlus } from "react-icons/fa";
 
 import { useImgRegisterMutation } from '../services/api';
+import { useNavigate } from 'react-router-dom';
 
 interface BoxProps {
   backgroundimage: string;
@@ -57,9 +58,11 @@ const UploadBox = styled.div`
 
 const Test2: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const jwt = Cookies.get('jwt');
+  const navigate = useNavigate();
 
   const { mutate } = useImgRegisterMutation();
 
@@ -84,6 +87,7 @@ const Test2: React.FC = () => {
     formData.append('upload_preset', 'undcwpw8');
 
     try {
+      setLoading(true);
       const response = await axios.post(
         'https://api.cloudinary.com/v1_1/dnjjlp2uy/image/upload',
         formData
@@ -93,6 +97,8 @@ const Test2: React.FC = () => {
 
       const data = {imageUrl, jwt};
       mutate(data);
+      setLoading(false);
+      navigate('/opet')
 
     } catch (error) {
       console.error('Error uploading image:', error);
@@ -108,6 +114,7 @@ const Test2: React.FC = () => {
         onChange={handleImageChange} 
       />
       <button onClick={handleUpload}>등록해요</button>
+      {loading ? <div className="loader"></div> : null}
     </PhotoUpload>
   );
 };

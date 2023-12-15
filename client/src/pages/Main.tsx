@@ -3,6 +3,7 @@ import AddButton from '../imgs/add.png';
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import { useApiUserData } from "../services/api";
+import { FaPen } from "react-icons/fa";
 
 const MainContainer = styled.div`
   height: 95vh;
@@ -22,11 +23,24 @@ const MainInstallPetBox = styled.div`
   }
 `
 
+const PetContainer = styled.div`
+  
+`
+
 const PetBox = styled.div`
   width: 150px;
   height: 150px;
   background: url(${props => props.property}) no-repeat center/cover;
   border-radius: 100%;
+`
+
+const PetChangeBox = styled.div`
+  position: relative;
+  top: -10px;
+  right: -120px;
+  .fapen {
+    cursor: pointer;
+  }
 `
 
 const Linkto = styled(Link)`
@@ -47,9 +61,14 @@ const Main = () => {
     <MainContainer>
       <MainInstallPetBox>
         {data && data[0].img ? (
-          <>
+          <PetContainer>
             <PetBox property={data[0].img}></PetBox>
-          </>
+            <PetChangeBox>
+              <Link to={'/test'}>
+                <FaPen className="fapen" size={20}/>
+              </Link>
+            </PetChangeBox>
+          </PetContainer>
         ) : (
           <>
           <Linkto to={'/addprofile'}/>

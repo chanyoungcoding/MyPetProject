@@ -27,7 +27,7 @@ const InputContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 90vh;
   background-color: white;
   border-radius: 30px 30px 0px 0px;
   border-top: 3px solid black;
