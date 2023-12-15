@@ -57,6 +57,14 @@ app.get('/pet-foods', async (req,res) => {
   res.json(petFoodInformation);
 })
 
+app.post('/pet-img-register', async (req,res) => {
+  const jwtToken = req.body.jwt;
+  const imageUrl = req.body.imageUrl;
+  const {username} = jwt.verify(jwtToken, secretKey);
+  const user = await User.find({username : username});
+  res.send('good')
+})
+
 app.post('/login', passport.authenticate('local'), (req,res) => {
   const username = req.body.username;
   const user = { username: username };

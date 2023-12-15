@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useMutation, useQuery } from 'react-query';
-import { PetMapData, PetFoodData, UserRegisterData, UserLoginData } from '../interface/interface';
+import { PetMapData, PetFoodData, UserRegisterData, UserLoginData, ImgRegisterData } from '../interface/interface';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -24,6 +24,19 @@ export function useApiPetFoodData(url:string, name:string | undefined) {
   return {data, isLoading, isError }
 }
 
+export const useImgRegisterMutation = () => {
+  return useMutation({
+    mutationFn: async (data: ImgRegisterData) => await axios.post('http://localhost:4000/pet-img-register', data),
+    mutationKey: 'ImgRegister',
+    onSuccess: (e) => {
+      console.log(e);
+    },
+    onError: (e) => {
+      console.log(e)
+    }
+  })
+}
+
 export const useRegisterMutation = () => {
   const navigate = useNavigate();
   return useMutation({
@@ -45,11 +58,11 @@ export const useLoginMutation = () => {
     mutationFn: async (data: UserLoginData) => await axios.post('http://localhost:4000/login', data),
     mutationKey: 'Login',
     onSuccess: (e) => {
-      alert('환영합니다.');
       Cookies.set('jwt', e.data.token, { expires: 1 / 24})
-      console.log(e.data.token)
+      navigate('/opet')
     },
     onError: () => {
+      alert('아이디 또는 비밀번호가 틀렸습니다.')
       navigate('/login')
     }
   })

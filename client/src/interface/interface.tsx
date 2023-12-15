@@ -28,3 +28,8 @@ export interface UserRegisterData {
 }
 
 export type UserLoginData = Omit<UserRegisterData, 'email'>;
+
+export interface ImgRegisterData {
+  jwt: string | undefined;
+  imageUrl: string;
+}

@@ -2,9 +2,11 @@
 import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
+import Cookies from 'js-cookie';
 
 import { FaPlus } from "react-icons/fa";
-import { useNavigate } from 'react-router-dom';
+
+import { useImgRegisterMutation } from '../services/api';
 
 interface BoxProps {
   backgroundimage: string;
@@ -56,7 +58,10 @@ const UploadBox = styled.div`
 const Test2: React.FC = () => {
   const [image, setImage] = useState<File | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
+
+  const jwt = Cookies.get('jwt');
+
+  const { mutate } = useImgRegisterMutation();
 
   const imageUploadBtn = () => {
     (inputRef.current as HTMLInputElement).click();
@@ -85,12 +90,9 @@ const Test2: React.FC = () => {
       );
 
       const imageUrl = response.data.secure_url;
-      navigate('/opet');
 
-      // 서버로 이미지 URL 전송
-      // await axios.post('http://your-server-url/save-image', {
-      //   imageUrl: imageUrl,
-      // });
+      const data = {imageUrl, jwt};
+      mutate(data);
 
     } catch (error) {
       console.error('Error uploading image:', error);
