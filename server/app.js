@@ -65,16 +65,22 @@ app.get('/pet-users', async (req,res) => {
 })
 
 app.post('/pet-img-register', async (req,res) => {
+  const {imageUrl, petName, selectedDate} = req.body;
   const jwtToken = req.body.jwt;
-  const imageUrl = req.body.imageUrl;
   const {username} = jwt.verify(jwtToken, secretKey);
   const updatedUser = await User.findOneAndUpdate(
     { username: username },
-    { $set: { img: imageUrl } },
+    { 
+      $set: {
+        img: imageUrl,
+        petName: petName, 
+        selectedDate: selectedDate,
+      }
+    },
     { new: true } 
   );
   if (updatedUser) {
-    res.json({ success: true, message: '이미지를 등록했습니다.' });
+    res.json({ success: true, message: '등록을 완료했어요.' });
   } else {
     res.json({ success: false, message: '사용자를 찾을 수 없습니다.' });
   }

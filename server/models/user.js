@@ -11,6 +11,14 @@ const UserSchema = new Schema({
   img: {
     type: String,
     default: ''
+  },
+  petName: {
+    type: String,
+    default: ''
+  },
+  selectedDate: {
+    type: Date,
+    default: ''
   }
 });
 
