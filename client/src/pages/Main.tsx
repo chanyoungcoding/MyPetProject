@@ -24,7 +24,17 @@ const MainInstallPetBox = styled.div`
 `
 
 const PetContainer = styled.div`
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  h3 {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  p {
+
+  }
 `
 
 const PetBox = styled.div`
@@ -37,7 +47,7 @@ const PetBox = styled.div`
 const PetChangeBox = styled.div`
   position: relative;
   top: -10px;
-  right: -120px;
+  right: -70px;
   .fapen {
     cursor: pointer;
   }
@@ -57,6 +67,16 @@ const Main = () => {
 
   const { data } = useApiUserData(userDB, user);
 
+  const calculateDaysDifference = (selectedDate:  string | Date) => {
+    const currentDate = new Date();
+    const selectedDateObject = new Date(selectedDate);
+
+    const timeDifference = selectedDateObject.getTime() - currentDate.getTime();
+    const dayDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
+    const Day = Math.abs(dayDifference) - 1
+    return Day;
+  };
+
   return ( 
     <MainContainer>
       <MainInstallPetBox>
@@ -64,14 +84,16 @@ const Main = () => {
           <PetContainer>
             <PetBox property={data[0].img}></PetBox>
             <PetChangeBox>
-              <Link to={'/test'}>
+              <Link to={'/addprofile'}>
                 <FaPen className="fapen" size={20}/>
               </Link>
             </PetChangeBox>
+            <h3>{data[0].petName}</h3>
+            <p><span>{calculateDaysDifference(data[0].selectedDate)}</span>동안 함께 했어요</p>
           </PetContainer>
         ) : (
           <>
-          <Linkto to={'/test'}/>
+          <Linkto to={'/addprofile'}/>
           <p>반려동물을 등록해 보세요.</p>
           </>
         )}

@@ -31,6 +31,8 @@ export interface UserData {
   email: string;
   password: string;
   img: string | undefined;
+  petName: string;
+  selectedDate: Date | string;
 }
 
 export type UserLoginData = Omit<UserRegisterData, 'email'>;
@@ -38,6 +40,8 @@ export type UserLoginData = Omit<UserRegisterData, 'email'>;
 export interface ImgRegisterData {
   jwt: string | undefined;
   imageUrl: string;
+  petName: string;
+  selectedDate: Date | null;
 }
 
 export interface DatePickData {

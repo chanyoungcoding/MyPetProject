@@ -11,10 +11,9 @@ import AnimalGrowth from './pages/AnimalGrowth';
 import AnimalTraining from './pages/AnimalTraining';
 import AnimalVaccinations from './pages/AnimalVaccinations';
 import Main from './pages/Main';
-import AddProfile from './pages/AddProfile';
 import Search from './pages/Search';
 import SearchDetail from './pages/SearchDetail';
-import Test from './pages/Test';
+import AddProfile from './pages/AddProfile';
 import Register from './pages/Register';
 
 function App() {
@@ -36,7 +35,6 @@ function App() {
           <Route path='/animalGrowth' element={<AnimalGrowth/>}/>
           <Route path='/animalTraining' element={<AnimalTraining/>}/>
           <Route path='/animalVaccinations' element={<AnimalVaccinations/>}/>
-          <Route path='/Test' element={<Test/>}/>
         </Route>
       </Routes>
     </RecoilRoot>
