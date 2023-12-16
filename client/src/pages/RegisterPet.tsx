@@ -14,11 +14,7 @@ interface BoxProps {
 }
 
 const PhotoUpload = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 300px;
+  margin-top: 150px;
   input {
     display: none;
   }
@@ -57,6 +53,7 @@ const UploadBox = styled.div`
 `
 
 const Test2: React.FC = () => {
+  
   const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);

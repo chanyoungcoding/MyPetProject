@@ -39,3 +39,13 @@ export interface ImgRegisterData {
   jwt: string | undefined;
   imageUrl: string;
 }
+
+export interface DatePickData {
+  selectedDate: Date | null;
+  handleDateChange: (date: Date | null) => void;
+}
+
+export interface NamePickData {
+  petName: string;
+  handlePetName: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
