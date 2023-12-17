@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import '../styles/home.scss';
-import cat from '../imgs/고양이.png';
+import dog from '../imgs/mainLogo.png';
 import HomeBackground from '../imgs/MainBackground.png';
 
 const HomeContainer = styled.div`
@@ -37,7 +37,7 @@ const Home = () => {
     <HomeContainer>
       <h1>Our Pet</h1>
       <div className="loader"></div>
-      <img src={cat} alt="대표 이미지" />
+      <img src={dog} alt="대표 이미지" />
     </HomeContainer>
   );
 }
