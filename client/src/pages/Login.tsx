@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { LuUser, LuLock } from "react-icons/lu";
 
 import LoginPet from '../imgs/loginImage.png';
-import LoginBackground from '../imgs/MainBackground.png';
+import LoginBackground from '../imgs/MainBackground.jpg';
 import { Link } from "react-router-dom";
 import { useLoginMutation } from "../services/api";
 import { UserLoginData } from "../interface/interface";

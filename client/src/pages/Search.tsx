@@ -3,7 +3,6 @@ import { IoSearchOutline } from "react-icons/io5";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 
-import SearchBackground from '../imgs/MainBackground.png';
 
 import Chocolate from '../imgs/chocolate.jpg';
 import Orange from '../imgs/fruit.jpg';
@@ -19,7 +18,6 @@ const SearchContainer = styled.div`
   height: 95vh;
   margin: 0px auto;
   padding: 30px;
-  background: url(${SearchBackground}) no-repeat center/cover;
   p {
     margin-top: 30px;
     font-size: 24px;

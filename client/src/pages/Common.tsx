@@ -4,14 +4,14 @@ import styled from "styled-components";
 
 import '../styles/common.scss';
 
-import MainBackground from '../imgs/MainBackground.png';
+import MainBackground from '../imgs/MainBackground.jpg';
 import Navbar from "../components/Navbar";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 
 // 배경색
 const Main = styled.div`
-  background: url(${MainBackground});
+  background: url(${MainBackground}) no-repeat center/cover;
 `
 
 const Common = () => {

@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import BackGround from '../imgs/MainBackground.png';
 import React from 'react';
 
 interface TopBoxInnerProps {
@@ -10,7 +9,6 @@ interface TopBoxInnerProps {
 
 const GrowthTopBox = styled.div`
   height: 20vh;
-  background: url(${BackGround}) no-repeat center/cover;
 `
 
 const TopBoxInner = styled.div<TopBoxInnerProps>`
