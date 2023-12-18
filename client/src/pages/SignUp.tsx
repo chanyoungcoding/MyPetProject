@@ -1,25 +1,47 @@
 import { SyntheticEvent, useState } from "react";
-import { useRegisterMutation } from "../services/api";
-import { UserRegisterData } from "../interface/interface";
 import styled from "styled-components";
-
 import { CgClose } from "react-icons/cg";
 import axios from "axios";
+
+import { UserRegisterData } from "../interface/interface";
+import { useRegisterMutation } from "../services/api";
+import SignUpBackground from '../imgs/MainBackground.jpg';
+import { useNavigate } from "react-router-dom";
+
+import SignUpPet from '../imgs/loginImage.png';
 
 const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  height: 100vh;
   h1 {
     padding: 15px;
     font-size: 24px;
     font-weight: bold;
     border-bottom: 1px solid #EEEEEE;
   }
+  img {
+    position: absolute;
+    width: 200px;
+    object-fit: cover;
+    top: 36px;
+  }
   .CgClose {
     padding: 15px;
     position: absolute;
     left: -150px;
+  }
+  .registerbutton {
+    width: 370px;
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 24px;
+    font-weight: bold;
+    outline: none;
+    border: none;
+    background: linear-gradient(90deg, rgba(134,166,227,1) 0%, rgba(157,159,235,1) 63%, rgba(156,126,238,1) 100%);
   }
 `
 
@@ -28,7 +50,9 @@ const SignUpTop = styled.div`
 `
 
 const SignUpForm = styled.form`
-  padding: 15px;
+  margin-top: 125px;
+  padding: 25px;
+  border-top: 3px solid black;
   label {
     display: block;
     margin: 15px 0px;
@@ -42,7 +66,7 @@ const SignUpForm = styled.form`
     border-radius: 10px;
     border: none;
     outline: none;
-    background-color: #EEEEEE;
+    background-color: #9091E9;
   }
   p {
     margin-top: 5px;
@@ -87,6 +111,9 @@ const Register = () => {
   const [possibleName, setPossibleName] = useState(false);
   const [passwordTest, setPasswordTest] = useState(true);
 
+  const { mutate } = useRegisterMutation();
+  const navigate = useNavigate();
+
   const validateName = (input: string): boolean => {
     const validCharacters = /^[a-z0-9]+$/;
     const startsWithLowerCase = /^[a-z]/;
@@ -118,9 +145,6 @@ const Register = () => {
     }
   }
 
-
-  const { mutate } = useRegisterMutation();
-
   const handleLegister = () => {
     if (!user.username || !user.email || !user.password) {
       alert("모든 정보를 입력해 주세요.");
@@ -143,18 +167,23 @@ const Register = () => {
   }
 
   const handleOnChangeUser = (e:React.ChangeEvent<HTMLInputElement>)=> {
-    setUser({
-      ...user,
+    setUser(prevUser => ({
+      ...prevUser,
       [e.target.name] : e.target.value
-    })
+    }))
+  }
+
+  const handleBack = () => {
+    navigate('/login')
   }
 
   return ( 
     <SignUpContainer>
       <SignUpTop>
-        <CgClose className="CgClose" size={30}/>
+        <CgClose className="CgClose" onClick={handleBack} size={30}/>
         <h1>회원가입</h1>
       </SignUpTop>
+      <img src={SignUpPet} alt="petImage" />
       <SignUpForm>
         <SignUpNameBox>
           <label htmlFor="username">아이디</label>
@@ -174,7 +203,7 @@ const Register = () => {
           <input type="text" id="email" name="email" value={user.email} onChange={handleOnChangeUser} placeholder="이메일"/>
         </SignUpEmailBox>
       </SignUpForm>
-      <button onClick={handleLegister}>가입하기</button>
+      <button className="registerbutton" onClick={handleLegister}>가입하기</button>
     </SignUpContainer>
   );
 }
