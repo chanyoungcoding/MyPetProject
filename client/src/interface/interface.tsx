@@ -25,6 +25,7 @@ export interface UserRegisterData {
   username: string;
   email: string;
   password: string;
+  checkpassword: string;
 }
 export interface UserData {
   username: string;
@@ -35,7 +36,7 @@ export interface UserData {
   selectedDate: Date | string;
 }
 
-export type UserLoginData = Omit<UserRegisterData, 'email'>;
+export type UserLoginData = Omit<UserRegisterData, 'email' | 'checkpassword'>;
 
 export interface ImgRegisterData {
   jwt: string | undefined;

@@ -64,6 +64,16 @@ app.get('/pet-users', async (req,res) => {
   res.json(user);
 })
 
+app.get('/pet-usercheck', async (req,res) => {
+  const username = req.query.name;
+  const user = await User.find({username: username});
+  if(user.length > 0) {
+    return res.json('이름이 중복되었습니다.')
+  } else {
+    return res.json('사용할 수 있습니다.')
+  }
+})
+
 app.post('/pet-img-register', async (req,res) => {
   const {imageUrl, petName, selectedDate} = req.body;
   const jwtToken = req.body.jwt;
@@ -93,16 +103,22 @@ app.post('/login', passport.authenticate('local'), (req,res) => {
   res.json({ success: true, message: '로그인 성공', token });
 })
 
-app.post('/register', async(req,res) => {
+app.post('/register', async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    const user = new User({email, username});
+    const user = new User({ email, username });
     const registeredUser = await User.register(user, password);
     res.json(registeredUser);
-  } catch(e) {
-    res.json(e)
+  } catch (error) {
+    if (error.name === 'MongoError' && error.code === 11000) {
+      // MongoDB에서의 중복 에러 처리
+      res.status(400).json({ message: '이미 등록된 이메일입니다.' });
+    } else {
+      // 기타 에러 처리
+      res.status(500).json({ message: '회원 가입 중 오류가 발생했습니다.' });
+    }
   }
-})
+});
 
 app.get('/test', async(req,res) => {
   const jwtToken = req.query.jwt;

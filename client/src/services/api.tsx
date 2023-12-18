@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useMutation, useQuery } from 'react-query';
 import { PetMapData, PetFoodData, UserRegisterData, UserLoginData, ImgRegisterData, UserData } from '../interface/interface';
 import { useNavigate } from 'react-router-dom';
@@ -42,7 +42,7 @@ export const useImgRegisterMutation = () => {
       alert(e.data.message)
     },
     onError: (e) => {
-      console.log(e)
+      console.log(e);
     }
   })
 }
@@ -54,10 +54,15 @@ export const useRegisterMutation = () => {
     mutationKey: 'Register',
     onSuccess: (e) => {
       alert('회원가입에 성공하였습니다.');
-      console.log(e);
+      navigate('/login')
     },
-    onError: () => {
-      navigate('/')
+    onError: (error:AxiosError) => {
+      if (error.response && error.response.status === 400 && (error.response.data as any).message === '이미 등록된 이메일입니다.') {
+        alert('이메일이 중복되었습니다.');
+        navigate('/register')
+      } else {
+        console.log(error);
+      }
     }
   })
 }
