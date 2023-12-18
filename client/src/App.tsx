@@ -14,7 +14,7 @@ import Main from './pages/Main';
 import Search from './pages/Search';
 import SearchDetail from './pages/SearchDetail';
 import AddProfile from './pages/AddProfile';
-import Register from './pages/Register';
+import Register from './pages/SignUp';
 
 function App() {
   return (
