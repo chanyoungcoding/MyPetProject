@@ -14,7 +14,9 @@ const FooterContainer = styled.div`
   align-items: center;
   width: 100%;
   bottom: 0;
-  background-color: #e1e1e1;
+  padding: 5px 0px;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   z-index: 9999;
 `
 
@@ -24,8 +26,9 @@ const FooterBox = styled.div`
 
 const FooterCenter = styled.div`
   position: relative;
-  bottom: 30px;
-  background-color: #e1e1e1;
+  bottom: 35px;
+  background-color: #ffffff;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   border-radius: 100%;
   padding: 10px;
   a {

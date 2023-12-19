@@ -1,12 +1,13 @@
 /* eslint-disable */
 import React, { useEffect, useState, useMemo } from "react";
 import styled from "styled-components";
-import { IoSearchOutline, IoCafe } from "react-icons/io5";
+import { IoSearchOutline } from "react-icons/io5";
 import { FaHotel, FaHospital } from "react-icons/fa";
 import { useSpring, animated } from 'react-spring';
 
 import { useApiPetMapData } from "../services/api";
 import { PositionData } from "../interface/interface";
+import '../styles/kakaomap.scss';
 
 declare global {
   interface Window {
@@ -50,7 +51,8 @@ const KategorieMap = styled.div`
   display: flex;
   flex-direction: column;
   position: absolute;
-  margin-top: 50px;
+  margin-top: 80px;
+  margin-left: 10px;
   z-index: 10;
 `
 
@@ -60,7 +62,8 @@ const KategorieMapButton = styled.button`
   background-color: white;
   outline: none;
   border: none;
-  border: 1px solid black;
+  border-radius: 25px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   cursor: pointer;
 `
 
@@ -84,11 +87,14 @@ const MapUnderClick = styled.div`
 
 const MapUnderBox = styled.div`
   width: 90%;
-  height: 120px;
+  height: 140px;
   margin: 0px auto 20px;
   padding: 10px;
-  background-color: aliceblue;
+  background: rgb(134,166,227);
+  background: linear-gradient(90deg, rgba(134,166,227,1) 0%, rgba(229,224,230,1) 62%, rgba(221,228,243,1) 100%);
+  border-radius: 20px;
   h1 {
+    font-style: normal;
     padding: 10px 0px;
     font-size: 24px;
   }
@@ -96,7 +102,13 @@ const MapUnderBox = styled.div`
     margin: 10px 0px;
   }
   p {
+    display: inline-block;
     margin-top: 20px;
+    padding: 10px 30px;
+    font-size: 20px;
+    background: rgb(134,147,227);
+    background: linear-gradient(90deg, rgba(134,147,227,1) 37%, rgba(227,224,230,1) 81%, rgba(233,221,243,1) 100%);
+    border-radius: 15px;
   }
 `
 
@@ -143,8 +155,8 @@ const KakaoMap = () => {
     const map = new window.kakao.maps.Map(container, options);
 
     // 카카오 맵 마커 이미지 설정
-    const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png';
-    const imageSize = new window.kakao.maps.Size(64, 69);
+    const imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+    const imageSize = new window.kakao.maps.Size(24, 35);
     const imageOption = { offset: new window.kakao.maps.Point(27, 69) }; // 마커 안에 이미지 좌표
 
     // 마커 이미지 만들기
@@ -267,7 +279,6 @@ const KakaoMap = () => {
       <KategorieMap>
         <KategorieMapButton onClick={onSearch} name="호텔"><FaHotel size={20}/></KategorieMapButton>
         <KategorieMapButton onClick={onSearch} name="병원"><FaHospital size={20}/></KategorieMapButton>
-        <KategorieMapButton onClick={onSearch} name="카페"><IoCafe size={20}/></KategorieMapButton>
       </KategorieMap>
 
       <div id="map" style={{ width: '100%', height: '80vh' }}></div>

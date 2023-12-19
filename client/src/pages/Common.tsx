@@ -2,8 +2,6 @@ import { Outlet, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import styled from "styled-components";
 
-import '../styles/common.scss';
-
 import MainBackground from '../imgs/MainBackground.jpg';
 import Navbar from "../components/Navbar";
 import Cookies from "js-cookie";

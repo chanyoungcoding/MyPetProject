@@ -1,13 +1,16 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
-import ChocolateImg from '../imgs/chocolate.jpg';
 import TestDog from '../imgs/loginImage.png';
 import { useApiPetFoodData } from "../services/api";
 
-const DetailTopContainer = styled.div`
+interface DetailTopData {
+  imagename: string;
+}
+
+const DetailTopContainer = styled.div<DetailTopData>`
   height: 20vh;
-  background: url(${ChocolateImg}) no-repeat center/cover;
+  background: url(${props => props.imagename}) no-repeat center/cover;
   border-radius: 0px 0px 45px 0px;
 `
 
@@ -75,7 +78,7 @@ const SearchDetail = () => {
 
   return ( 
     <>
-    <DetailTopContainer/>
+    {data?.map(item => <DetailTopContainer imagename={item.image}/> )}
     <DetailContainer>
       {data && data?.length >= 1 ? data?.map(item => 
         <div key={item.name}>

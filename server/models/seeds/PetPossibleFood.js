@@ -12,7 +12,8 @@ mongoose.connect("mongodb://127.0.0.1:27017/PetMap")
 const PetFoodSchema = new mongoose.Schema({
   name: String,
   introduce: String,
-  eat: String
+  eat: String,
+  image: String
 })
 
 const PetFoodModel = mongoose.model('PetFood', PetFoodSchema);
@@ -23,7 +24,8 @@ const FetFoodDB = async () => {
     const petInfo = new PetFoodModel({
       name: list.name,
       introduce: list.introduce,
-      eat: list.eat
+      eat: list.eat,
+      image:list.image
     });
     await petInfo.save();
   }

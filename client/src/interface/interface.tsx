@@ -19,6 +19,7 @@ export interface PetFoodData {
   name: string;
   introduce: string;
   eat: string;
+  image: string;
 }
 
 export interface UserRegisterData {

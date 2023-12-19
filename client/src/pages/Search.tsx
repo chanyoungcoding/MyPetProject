@@ -69,8 +69,8 @@ const SwiperContainer = styled.div`
 `
 
 const SwiperInner = styled.div`
-  width: 135px;
-  height: 135px;
+  width: 155px;
+  height: 155px;
   background: linear-gradient(to left, rgba(0,0,0, 0.4), rgba(0,0,0,0.4)), url(${props => props.property}) no-repeat center/cover;
   border-radius: 10px;
   color: ${props => props.color || 'white'};
@@ -111,7 +111,7 @@ const Search = () => {
       <RecommendBox>
         <RecommendSearch>#양파</RecommendSearch>
         <RecommendSearch>#감자</RecommendSearch>
-        <RecommendSearch>#오징어</RecommendSearch>
+        <RecommendSearch>#초콜릿</RecommendSearch>
       </RecommendBox>
 
       <SwiperContainer>
