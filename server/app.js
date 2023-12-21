@@ -74,6 +74,81 @@ app.get('/pet-usercheck', async (req,res) => {
   }
 })
 
+app.post('/pet-building-register', async(req,res) => {
+  try {
+    const {content, address, phoneNumber} = req.body;
+    const jwtToken = req.body.jwt;
+    const { username } = jwt.verify(jwtToken, secretKey);
+    const existingUser = await User.findOne({
+      username: username,
+      'petBuilding.content': content
+    });
+    if(existingUser) {
+      return res.json({success:false, message: '이미 좋아요를 등록하셨습니다.'})
+    }
+    // 해당 유저를 찾아서 foodName과 foodPossible을 추가합니다.
+    const updatedUser = await User.findOneAndUpdate(
+      { username: username },
+      {
+        $push: {
+          petBuilding: {
+            content: content,
+            address: address,
+            phoneNumber: phoneNumber
+          }
+        }
+      }
+    );
+    if(updatedUser) {
+      return res.send({ success: true, message: '마이페이지에 등록했습니다.' });
+    } else {
+      return res.send({ success: false, message: '등록에 실패했습니다.' });
+    }
+
+  } catch(e) {
+    res.status(500).send('Internal Server Error');
+  }
+})
+
+app.post('/pet-petFood-register', async (req, res) => {
+  try {
+    const { foodName, foodPossible, foodImage } = req.body;
+    const jwtToken = req.body.jwt;
+    const { username } = jwt.verify(jwtToken, secretKey);
+
+    const existingUser = await User.findOne({
+      username: username,
+      'petFood.foodName': foodName
+    });
+
+    if (existingUser) {
+      return res.json({ success: false, message: '이미 좋아요를 등록하셨습니다.' });
+    }
+
+    // 해당 유저를 찾아서 foodName과 foodPossible을 추가합니다.
+    const updatedUser = await User.findOneAndUpdate(
+      { username: username },
+      {
+        $push: {
+          petFood: {
+            foodName: foodName,
+            foodPossible: foodPossible,
+            foodImage: foodImage
+          }
+        }
+      }
+    );
+    if(updatedUser) {
+      return res.send({ success: true, message: '마이페이지에 등록했습니다.' });
+    } else {
+      return res.send({ success: false, message: '등록에 실패했습니다.' });
+    }
+
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 app.post('/pet-img-register', async (req,res) => {
   const {imageUrl, petName, selectedDate} = req.body;
   const jwtToken = req.body.jwt;
@@ -111,10 +186,8 @@ app.post('/register', async (req, res) => {
     res.json(registeredUser);
   } catch (error) {
     if (error.name === 'MongoError' && error.code === 11000) {
-      // MongoDB에서의 중복 에러 처리
       res.status(400).json({ message: '이미 등록된 이메일입니다.' });
     } else {
-      // 기타 에러 처리
       res.status(500).json({ message: '회원 가입 중 오류가 발생했습니다.' });
     }
   }

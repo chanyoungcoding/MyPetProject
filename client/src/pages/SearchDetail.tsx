@@ -1,8 +1,12 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { FaRegHeart, FaHeart } from "react-icons/fa";
 
 import TestDog from '../imgs/loginImage.png';
-import { useApiPetFoodData } from "../services/api";
+import { useApiPetFoodData, usePetFoodRegisterMutation } from "../services/api";
+import Cookies from "js-cookie";
+import { useState } from "react";
+import { PetFoodRegisterData } from "../interface/interface";
 
 interface DetailTopData {
   imagename: string;
@@ -48,6 +52,11 @@ const DetailHeader = styled.div`
     font-size: 2rem;
     font-weight: bold;
   }
+  .heart {
+    position: absolute;
+    right: 30px;
+    top: -80px;
+  }
 `
 
 const DetailIntro = styled.p`
@@ -70,19 +79,33 @@ const NoInformation = styled.p`
 
 const SearchDetail = () => {
 
-
+  const jwt = Cookies.get('jwt');
   const {name} = useParams();
   const PetFoodDB = 'http://localhost:4000/pet-foods';
 
+  const [clickHeart, setClickHeart] = useState(false);
+
   const { data } = useApiPetFoodData(PetFoodDB, name);
+  const {mutate} = usePetFoodRegisterMutation(); 
+
+  const handleClick = (foodName:string, foodPossible:string, foodImage: string) => {
+    const data:PetFoodRegisterData = {jwt: jwt, foodName: foodName, foodPossible: foodPossible, foodImage: foodImage}
+    mutate(data);
+    setClickHeart(true);
+  }
 
   return ( 
     <>
-    {data?.map(item => <DetailTopContainer imagename={item.image}/> )}
+    {data?.map(item => <DetailTopContainer key={item.name} imagename={item.image}/> )}
     <DetailContainer>
       {data && data?.length >= 1 ? data?.map(item => 
         <div key={item.name}>
           <DetailHeader>
+            {clickHeart ? 
+              <FaHeart className="heart" size={40}/> 
+              : 
+              <FaRegHeart className="heart" size={40} onClick={() => handleClick(item.name, item.eat, item.image)}/> 
+            }
             <img src={TestDog} alt="등록된 강아지" />
             <div></div>
             <h1>{item.name} {item.eat}.</h1>

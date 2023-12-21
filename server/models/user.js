@@ -19,7 +19,27 @@ const UserSchema = new Schema({
   selectedDate: {
     type: Date,
     default: ''
-  }
+  },
+  petFood: {
+    type: [
+      {
+        foodName: String,
+        foodPossible: String,
+        foodImage: String,
+      }
+    ],
+    default: []
+  },
+  petBuilding: {
+    type: [
+      {
+        content: String,
+        address: String,
+        phoneNumber: String,
+      }
+    ],
+    default: []
+  },
 });
 
 mongoose.plugin(passportLocalMongoose);

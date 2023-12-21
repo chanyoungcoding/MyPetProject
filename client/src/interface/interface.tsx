@@ -28,6 +28,19 @@ export interface UserRegisterData {
   password: string;
   checkpassword: string;
 }
+
+export interface PetFood {
+  foodName: string;
+  foodPossible: string;
+  foodImage: string;
+}
+
+export interface PetBuilding {
+  content: string,
+  address: string,
+  phoneNumber: string,
+}
+
 export interface UserData {
   username: string;
   email: string;
@@ -35,9 +48,25 @@ export interface UserData {
   img: string | undefined;
   petName: string;
   selectedDate: Date | string;
+  petFood: PetFood[];
+  petBuilding: PetBuilding[];
 }
 
 export type UserLoginData = Omit<UserRegisterData, 'email' | 'checkpassword'>;
+
+export interface PetBuildingRegister {
+  content: string;
+  address: string;
+  phoneNumber: string | undefined;
+  jwt: string | undefined;
+}
+
+export interface PetFoodRegisterData {
+  foodName: string;
+  foodPossible: string;
+  jwt: string | undefined;
+  foodImage: string;
+}
 
 export interface ImgRegisterData {
   jwt: string | undefined;

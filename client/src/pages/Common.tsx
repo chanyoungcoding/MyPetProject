@@ -7,6 +7,8 @@ import Navbar from "../components/Navbar";
 import Cookies from "js-cookie";
 import { useEffect } from "react";
 
+import '../styles/common.scss';
+
 // 배경색
 const Main = styled.div`
   background: url(${MainBackground}) no-repeat center/cover;

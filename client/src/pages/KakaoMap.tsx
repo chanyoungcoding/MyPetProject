@@ -4,10 +4,12 @@ import styled from "styled-components";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaHotel, FaHospital } from "react-icons/fa";
 import { useSpring, animated } from 'react-spring';
+import { FaHeart } from "react-icons/fa";
 
-import { useApiPetMapData } from "../services/api";
+import { useApiPetMapData, usePetBuildingRegisterMutation } from "../services/api";
 import { PositionData } from "../interface/interface";
 import '../styles/kakaomap.scss';
+import Cookies from "js-cookie";
 
 declare global {
   interface Window {
@@ -86,6 +88,7 @@ const MapUnderClick = styled.div`
 `
 
 const MapUnderBox = styled.div`
+  position: relative;
   width: 90%;
   height: 140px;
   margin: 0px auto 20px;
@@ -102,6 +105,9 @@ const MapUnderBox = styled.div`
     margin: 10px 0px;
   }
   p {
+    position: absolute;
+    bottom: -8px;
+    left: 20px;
     display: inline-block;
     margin-top: 20px;
     padding: 10px 30px;
@@ -110,13 +116,22 @@ const MapUnderBox = styled.div`
     background: linear-gradient(90deg, rgba(134,147,227,1) 37%, rgba(227,224,230,1) 81%, rgba(233,221,243,1) 100%);
     border-radius: 15px;
   }
+  .heart {
+    position: absolute;
+    bottom: 22px;
+    right: 20px;
+    color: red;
+  }
 `
 
 const KakaoMap = () => {
 
+  const jwt = Cookies.get('jwt');
+
   const PetMapDB = 'http://localhost:4000/pet-maps';
 
   const { data } = useApiPetMapData(PetMapDB);
+  const { mutate } = usePetBuildingRegisterMutation();
 
   const positions = useMemo(() => {
     return data?.map(item => ({
@@ -261,7 +276,10 @@ const KakaoMap = () => {
     setpetShopName(searchName)
   }
 
-  
+  const onRegisterBuilding = (content:string, address:string, phoneNumber: string | undefined) => {
+    const data = {content:content, address: address, phoneNumber: phoneNumber, jwt: jwt}
+    mutate(data);
+  }
 
   return (
     <KakaoMapContainer>
@@ -289,8 +307,9 @@ const KakaoMap = () => {
             <h1>{item.content}</h1>
             <h2>{item.address}</h2>
             <p>{item.phoneNumber}</p>
-          </MapUnderBox>
-        ) }
+            <FaHeart className="heart" size={20} onClick={() => onRegisterBuilding(item.content, item.address, item.phoneNumber)}/>
+          </MapUnderBox> 
+        )}
       </MapUnderSearchContainer>
     </KakaoMapContainer>
   )
