@@ -1,5 +1,8 @@
+import Cookies from "js-cookie";
 import React from "react";
 import styled from "styled-components";
+import { usePetBuildingDeleteMutation } from "../services/api";
+import { MdDelete } from "react-icons/md";
 
 const MapUnderBox = styled.div`
   position: relative;
@@ -30,6 +33,11 @@ const MapUnderBox = styled.div`
     background: linear-gradient(90deg, rgba(134,147,227,1) 37%, rgba(227,224,230,1) 81%, rgba(233,221,243,1) 100%);
     border-radius: 15px;
   }
+  .delete {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+  }
 `
 
 
@@ -40,11 +48,20 @@ interface BuildingData {
 }
 
 const MyPageBuilding:React.FC<BuildingData> = ({buildingName,buildingAddress,buildingPhoneNumber }) => {
+
+  const user = Cookies.get('jwt');
+  const { mutate } = usePetBuildingDeleteMutation();
+
+  const handleDeleteClick = (buildingName:string, jwt:string | undefined) => {
+    mutate({buildingName, jwt});
+  }
+
   return ( 
     <MapUnderBox>
       <h1>{buildingName}</h1>
       <h2>{buildingAddress}</h2>
       <p>{buildingPhoneNumber}</p>
+      <MdDelete className="delete" size={30} onClick={() => handleDeleteClick(buildingName, user)}/>
     </MapUnderBox>
   );
 }

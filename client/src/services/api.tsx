@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { useMutation, useQuery } from 'react-query';
-import { PetMapData, PetFoodData, UserRegisterData, UserLoginData, ImgRegisterData, UserData, PetFoodRegisterData, PetBuildingRegister } from '../interface/interface';
+import { PetMapData, PetFoodData, UserRegisterData, UserLoginData, ImgRegisterData, UserData, PetFoodRegisterData, PetBuildingRegister, PetFoodDeleteData, PetBuildingDelete } from '../interface/interface';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -47,6 +47,22 @@ export const usePetBuildingRegisterMutation = () => {
   })
 }
 
+export const usePetBuildingDeleteMutation = () => {
+  return useMutation({
+    mutationFn: async (data: PetBuildingDelete) => await axios.delete('http://localhost:4000/pet-building-delete', {data} ),
+    mutationKey: 'PetBuildingDelete',
+    onSuccess: (e) => {
+      if(e.data.message === '삭제완료') {
+        alert('삭제 완료!!')
+      }
+      window.location.reload();
+    },
+    onError: (e) => {
+      console.log(e);
+    }
+  })
+}
+
 
 export const usePetFoodRegisterMutation = () => {
   return useMutation({
@@ -54,6 +70,22 @@ export const usePetFoodRegisterMutation = () => {
     mutationKey: 'PetFoodRegister',
     onSuccess: (e) => {
       alert(e.data.message)
+    },
+    onError: (e) => {
+      console.log(e);
+    }
+  })
+}
+
+export const usePetFoodDeleteMutation = () => {
+  return useMutation({
+    mutationFn: async (data: PetFoodDeleteData) => await axios.delete('http://localhost:4000/pet-petFood-delete', {data} ),
+    mutationKey: 'PetFoodDelete',
+    onSuccess: (e) => {
+      if(e.data.message === '삭제완료') {
+        alert('삭제 완료!!')
+      }
+      window.location.reload();
     },
     onError: (e) => {
       console.log(e);
@@ -96,7 +128,7 @@ export const useLoginMutation = () => {
     mutationFn: async (data: UserLoginData) => await axios.post('http://localhost:4000/login', data),
     mutationKey: 'Login',
     onSuccess: (e) => {
-      Cookies.set('jwt', e.data.token, { expires: 1 / 24})
+      Cookies.set('jwt', e.data.token, { expires: 6 / 24 })
       navigate('/opet')
     },
     onError: () => {

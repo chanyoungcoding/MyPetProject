@@ -86,6 +86,11 @@ app.post('/pet-building-register', async(req,res) => {
     if(existingUser) {
       return res.json({success:false, message: '이미 좋아요를 등록하셨습니다.'})
     }
+
+    const user = await User.findOne({ username: username });
+    if (user && user.petBuilding && user.petBuilding.length >= 10) {
+      return res.json({ success: false, message: '10개 이상 좋아요를 등록할 수 없습니다.' });
+    }
     // 해당 유저를 찾아서 foodName과 foodPossible을 추가합니다.
     const updatedUser = await User.findOneAndUpdate(
       { username: username },
@@ -125,7 +130,12 @@ app.post('/pet-petFood-register', async (req, res) => {
       return res.json({ success: false, message: '이미 좋아요를 등록하셨습니다.' });
     }
 
-    // 해당 유저를 찾아서 foodName과 foodPossible을 추가합니다.
+    const user = await User.findOne({ username: username });
+    if (user && user.petFood && user.petFood.length >= 10) {
+      return res.json({ success: false, message: '10개 이상 좋아요를 등록할 수 없습니다.' });
+    }
+
+    // petFood 추가
     const updatedUser = await User.findOneAndUpdate(
       { username: username },
       {
@@ -138,7 +148,8 @@ app.post('/pet-petFood-register', async (req, res) => {
         }
       }
     );
-    if(updatedUser) {
+
+    if (updatedUser) {
       return res.send({ success: true, message: '마이페이지에 등록했습니다.' });
     } else {
       return res.send({ success: false, message: '등록에 실패했습니다.' });
@@ -148,6 +159,7 @@ app.post('/pet-petFood-register', async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 });
+
 
 app.post('/pet-img-register', async (req,res) => {
   const {imageUrl, petName, selectedDate} = req.body;
@@ -174,7 +186,7 @@ app.post('/pet-img-register', async (req,res) => {
 app.post('/login', passport.authenticate('local'), (req,res) => {
   const username = req.body.username;
   const user = { username: username };
-  const token = jwt.sign(user, secretKey, { expiresIn: '1h' }); // 1시간 동안 유효
+  const token = jwt.sign(user, secretKey, { expiresIn: '4h' }); // 4시간 동안 유효
   res.json({ success: true, message: '로그인 성공', token });
 })
 
@@ -193,12 +205,45 @@ app.post('/register', async (req, res) => {
   }
 });
 
-app.get('/test', async(req,res) => {
-  const jwtToken = req.query.jwt;
-  const data = jwt.verify(jwtToken, secretKey)
-  console.log(data.username);
-  res.send('good');
-})
+app.delete('/pet-petFood-delete', async (req, res) => {
+  const jwtToken = req.body.jwt;
+  try {
+    const { username } = jwt.verify(jwtToken, secretKey);
+    const user = await User.findOneAndUpdate(
+      { username },
+      { $pull: { petFood: { foodName: req.body.foodName } } },
+    );
+
+    if (!user) {
+      return res.status(404).json({ error: '사용자를 찾을 수 없습니다.' });
+    }
+
+    return res.json({ message: '삭제완료', user });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: '서버 오류' });
+  }
+});
+
+app.delete('/pet-building-delete', async (req, res) => {
+  const jwtToken = req.body.jwt;
+  try {
+    const { username } = jwt.verify(jwtToken, secretKey);
+    const user = await User.findOneAndUpdate(
+      { username },
+      { $pull: { petBuilding: { content: req.body.buildingName } } },
+    );
+
+    if (!user) {
+      return res.status(404).json({ error: '사용자를 찾을 수 없습니다.' });
+    }
+
+    return res.json({ message: '삭제완료', user });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: '서버 오류' });
+  }
+});
 
 const PORT = process.env.PORT;
 

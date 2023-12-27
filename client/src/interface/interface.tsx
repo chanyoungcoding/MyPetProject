@@ -52,12 +52,17 @@ export interface UserData {
   petBuilding: PetBuilding[];
 }
 
-export type UserLoginData = Omit<UserRegisterData, 'email' | 'checkpassword'>;
+export type UserLoginData = Omit<UserRegisterData, 'email' | 'checkpassword'>
 
 export interface PetBuildingRegister {
   content: string;
   address: string;
   phoneNumber: string | undefined;
+  jwt: string | undefined;
+}
+
+export interface PetBuildingDelete {
+  buildingName: string;
   jwt: string | undefined;
 }
 
@@ -67,6 +72,8 @@ export interface PetFoodRegisterData {
   jwt: string | undefined;
   foodImage: string;
 }
+
+export type PetFoodDeleteData = Omit<PetFoodRegisterData, 'foodPossible' | 'foodImage'>
 
 export interface ImgRegisterData {
   jwt: string | undefined;

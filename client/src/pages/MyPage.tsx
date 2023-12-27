@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
-import { FaMapLocationDot, FaBowlFood } from "react-icons/fa6";
 import { useState } from "react";
+import Cookies from "js-cookie";
+
+import { FaMapLocationDot, FaBowlFood } from "react-icons/fa6";
+
 import MyPagePetFood from "../components/MyPagePetFood";
 import MyPageBuilding from "../components/MyPageBuilding";
-import Cookies from "js-cookie";
 import { useApiUserData } from "../services/api";
+
 
 const MyPageTop = styled.div`
   background: rgb(238,174,202);
@@ -65,6 +68,9 @@ const TypeBox = styled.div`
 `
 
 const BottomContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 10px;
   padding: 10px 0px 120px;
   background-color: white;

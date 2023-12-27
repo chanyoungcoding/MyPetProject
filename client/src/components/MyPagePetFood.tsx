@@ -2,13 +2,23 @@ import styled from "styled-components";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+import { MdDelete } from "react-icons/md";
+import { usePetFoodDeleteMutation } from "../services/api";
+import Cookies from "js-cookie";
+
 const FoodBox = styled.div`
+  position: relative;
   display: flex;
-  width: 350px;
+  width: 90%;
   height: 150px;
   margin-bottom: 10px;
   border-radius: 20px;
   background-color: aliceblue;
+  .delete {
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+  }
 `
 
 const FoodBoxLeft = styled.div`
@@ -45,8 +55,15 @@ interface FoodData {
 const MyPagePetFood:React.FC<FoodData> = ({foodName, foodPossible, foodImage}) => {
 
   const navigate = useNavigate();
+  const user = Cookies.get('jwt');
+  const { mutate } = usePetFoodDeleteMutation();
+  
   const goToFoodPage = () => {
     navigate(`/search/${foodName}`)
+  }
+
+  const handleDeleteClick = (foodName:string, jwt:string | undefined) => {
+    mutate({foodName, jwt});
   }
 
   return ( 
@@ -59,6 +76,7 @@ const MyPagePetFood:React.FC<FoodData> = ({foodName, foodPossible, foodImage}) =
           <h2>{foodPossible}</h2>
           <button className="button-4" onClick={goToFoodPage}>자세한 정보</button>
         </FoodBoxRight>
+        <MdDelete className="delete" onClick={() => handleDeleteClick(foodName, user)} size={30} />
       </FoodBox>
   );
 }

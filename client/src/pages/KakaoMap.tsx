@@ -225,7 +225,6 @@ const KakaoMap = () => {
           const content = positions[i].content;
           
           if (content.includes(petShopName)) {
-            console.log(positions[i].content)
             return positions[i].latlng;
           }
         }
