@@ -5,7 +5,6 @@ import axios from "axios";
 
 import { UserRegisterData } from "../interface/interface";
 import { useRegisterMutation } from "../services/api";
-import SignUpBackground from '../imgs/MainBackground.jpg';
 import { useNavigate } from "react-router-dom";
 
 import SignUpPet from '../imgs/loginImage.png';

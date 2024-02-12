@@ -24,6 +24,7 @@
     "react-router-dom": "^6.20.0",
     "react-scripts": "5.0.1",
     "react-spring": "^9.7.3",
+    "react-spring-bottom-sheet": "^3.4.1",
     "recoil": "^0.7.7",
     "sass": "^1.69.5",
     "styled-components": "^6.1.1",

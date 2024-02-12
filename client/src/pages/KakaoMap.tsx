@@ -5,11 +5,14 @@ import { IoSearchOutline } from "react-icons/io5";
 import { FaHotel, FaHospital } from "react-icons/fa";
 import { useSpring, animated } from 'react-spring';
 import { FaHeart } from "react-icons/fa";
+import { BottomSheet } from 'react-spring-bottom-sheet';
 
 import { useApiPetMapData, usePetBuildingRegisterMutation } from "../services/api";
 import { PositionData } from "../interface/interface";
 import '../styles/kakaomap.scss';
 import Cookies from "js-cookie";
+
+import 'react-spring-bottom-sheet/dist/style.css'
 
 declare global {
   interface Window {
@@ -69,32 +72,13 @@ const KategorieMapButton = styled.button`
   cursor: pointer;
 `
 
-const MapUnderSearchContainer = styled(animated.div)`
-  position: relative;
-  height: 60vh;
-  padding: 10px;
-  background-color: white;
-  border-radius: 15px 15px 0px 0px;
-  overflow-y: scroll;
-  z-index: 10;
-`
-
-const MapUnderClick = styled.div`
-  width: 100px;
-  height: 10px;
-  margin: 10px auto 30px;
-  border-radius: 15px;
-  background-color: gray;
-`
-
 const MapUnderBox = styled.div`
   position: relative;
   width: 90%;
   height: 140px;
   margin: 0px auto 20px;
   padding: 10px;
-  background: rgb(134,166,227);
-  background: linear-gradient(90deg, rgba(134,166,227,1) 0%, rgba(229,224,230,1) 62%, rgba(221,228,243,1) 100%);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   border-radius: 20px;
   h1 {
     font-style: normal;
@@ -112,8 +96,8 @@ const MapUnderBox = styled.div`
     margin-top: 20px;
     padding: 10px 30px;
     font-size: 20px;
-    background: rgb(134,147,227);
-    background: linear-gradient(90deg, rgba(134,147,227,1) 37%, rgba(227,224,230,1) 81%, rgba(233,221,243,1) 100%);
+    background-color: #e9e9e9;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     border-radius: 15px;
   }
   .heart {
@@ -130,9 +114,10 @@ const KakaoMap = () => {
 
   const PetMapDB = 'http://localhost:4000/pet-maps';
 
+  
   const { data } = useApiPetMapData(PetMapDB);
   const { mutate } = usePetBuildingRegisterMutation();
-
+  
   const positions = useMemo(() => {
     return data?.map(item => ({
       content: item.buildingName,
@@ -141,12 +126,12 @@ const KakaoMap = () => {
       latlng: new window.kakao.maps.LatLng(item.latitude, item.longitude)
     })) || [];
   }, [data]);
-
+  
   const [petShopName, setpetShopName] = useState('');
   const [filterValue, setFilterValue] = useState('');
-  const [inView, setInView] = useState(false);
   const [item, SetItem] = useState<PositionData[] | null>(null);
-
+  const [open, setOpen] = useState(false);
+  
   // 검색시 해당 이름의 호텔,병원,카페 정보를 가져옴
   const findContent = (text: string, content: PositionData[]) => {
     return content.filter(item => item.content.includes(text));
@@ -259,14 +244,6 @@ const KakaoMap = () => {
     }
   }
 
-  const springProps = useSpring({
-    transform: inView ? 'translateY(-400px)' : 'translateY(0px)'
-  })
-
-  const onClick = () => {
-    setInView(!inView)
-  }
-
   // handleClickChange 랑 같은 동작 (버튼만 클릭해도 호텔,병원,카페 구분)
   const onSearch = (e:React.MouseEvent<HTMLButtonElement>) => {
     const searchName = e.currentTarget.name;
@@ -299,8 +276,11 @@ const KakaoMap = () => {
       </KategorieMap>
 
       <div id="map" style={{ width: '100%', height: '80vh' }}></div>
-      <MapUnderSearchContainer style={springProps}>
-        <MapUnderClick onClick={onClick}></MapUnderClick>
+      <BottomSheet 
+        open={true}
+        snapPoints={({ minHeight, maxHeight }) => [minHeight * 0.2, maxHeight * 0.7]}
+        blocking={false}
+      >
         {item?.map((item, index)=> 
           <MapUnderBox key={index}>
             <h1>{item.content}</h1>
@@ -309,7 +289,7 @@ const KakaoMap = () => {
             <FaHeart className="heart" size={20} onClick={() => onRegisterBuilding(item.content, item.address, item.phoneNumber)}/>
           </MapUnderBox> 
         )}
-      </MapUnderSearchContainer>
+      </BottomSheet>
     </KakaoMapContainer>
   )
 }
