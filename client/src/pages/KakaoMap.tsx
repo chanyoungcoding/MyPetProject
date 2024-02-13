@@ -24,6 +24,7 @@ const KakaoMapContainer = styled.div`
   height: 100vh;
   position: relative;
   overflow-y: hidden;
+  background-color: white;
 `
 
 const KakaoMapSearchContainer = styled.div`
@@ -112,7 +113,7 @@ const KakaoMap = () => {
 
   const jwt = Cookies.get('jwt');
 
-  const PetMapDB = 'http://localhost:4000/pet-maps';
+  const PetMapDB = 'http://localhost:4000/api/map';
 
   
   const { data } = useApiPetMapData(PetMapDB);

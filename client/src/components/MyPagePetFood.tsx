@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 import { MdDelete } from "react-icons/md";
 import { usePetFoodDeleteMutation } from "../services/api";
-import Cookies from "js-cookie";
 
 const FoodBox = styled.div`
   position: relative;
@@ -55,15 +54,14 @@ interface FoodData {
 const MyPagePetFood:React.FC<FoodData> = ({foodName, foodPossible, foodImage}) => {
 
   const navigate = useNavigate();
-  const user = Cookies.get('jwt');
   const { mutate } = usePetFoodDeleteMutation();
   
   const goToFoodPage = () => {
     navigate(`/search/${foodName}`)
   }
 
-  const handleDeleteClick = (foodName:string, jwt:string | undefined) => {
-    mutate({foodName, jwt});
+  const handleDeleteClick = (foodName:string) => {
+    mutate({foodName});
   }
 
   return ( 
@@ -76,7 +74,7 @@ const MyPagePetFood:React.FC<FoodData> = ({foodName, foodPossible, foodImage}) =
           <h2>{foodPossible}</h2>
           <button className="button-4" onClick={goToFoodPage}>자세한 정보</button>
         </FoodBoxRight>
-        <MdDelete className="delete" onClick={() => handleDeleteClick(foodName, user)} size={30} />
+        <MdDelete className="delete" onClick={() => handleDeleteClick(foodName)} size={30} />
       </FoodBox>
   );
 }

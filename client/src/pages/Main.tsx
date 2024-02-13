@@ -81,16 +81,16 @@ const Main = () => {
   return ( 
     <MainContainer>
       <MainInstallPetBox>
-        {data?.[0]?.img ? (
+        {data?.img ? (
           <PetContainer>
-            <PetBox property={data[0].img}></PetBox>
+            <PetBox property={data.img}></PetBox>
             <PetChangeBox>
               <Link to={'/addprofile'}>
                 <FaPen className="fapen" size={20}/>
               </Link>
             </PetChangeBox>
-            <h3>{data[0].petName}</h3>
-            <p><span>{calculateDaysDifference(data[0].selectedDate)}</span>동안 함께 했어요</p>
+            <h3>{data.petName}</h3>
+            <p><span>{calculateDaysDifference(data.selectedDate)}</span>동안 함께 했어요</p>
           </PetContainer>
         ) : (
           <>

@@ -4,6 +4,7 @@ import { PetMapData, PetFoodData, UserRegisterData, UserLoginData, ImgRegisterDa
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
+
 export function useApiPetMapData(url:string) {
   const {data, isLoading, isError} = useQuery<PetMapData[]>({ 
     queryKey: ['PetMapData'], 
@@ -26,7 +27,7 @@ export function useApiPetFoodData(url:string, name:string | undefined) {
 
 export function useApiUserData(url:string) {
   const jwtToken = Cookies.get("jwt");
-  const {data, isLoading, isError} = useQuery<UserData[]>({ 
+  const {data, isLoading, isError} = useQuery<UserData>({ 
     queryKey: ['UserData'], 
     queryFn: async () => {
       const response = await axios.get(`${url}`,{
@@ -40,8 +41,13 @@ export function useApiUserData(url:string) {
 }
 
 export const usePetBuildingRegisterMutation = () => {
+  const jwtToken = Cookies.get("jwt");
   return useMutation({
-    mutationFn: async (data: PetBuildingRegister) => await axios.post('http://localhost:4000/pet-building-register', data),
+    mutationFn: async (data: PetBuildingRegister) => await axios.post('http://localhost:4000/api/users/registerBuilding', data, {
+      headers: {
+        Authorization: `${jwtToken}`,
+      }
+    }),
     mutationKey: 'PetBuildingRegister',
     onSuccess: (e) => {
       alert(e.data.message)
@@ -53,8 +59,13 @@ export const usePetBuildingRegisterMutation = () => {
 }
 
 export const usePetBuildingDeleteMutation = () => {
+  const jwtToken = Cookies.get("jwt");
   return useMutation({
-    mutationFn: async (data: PetBuildingDelete) => await axios.delete('http://localhost:4000/pet-building-delete', {data} ),
+    mutationFn: async (data: PetBuildingDelete) => await axios.delete(`http://localhost:4000/api/users/deleteBuilding/${data.buildingName}`, {
+      headers: {
+        Authorization: `${jwtToken}`,
+      }
+    }),
     mutationKey: 'PetBuildingDelete',
     onSuccess: (e) => {
       if(e.data.message === '삭제완료') {
@@ -70,8 +81,13 @@ export const usePetBuildingDeleteMutation = () => {
 
 
 export const usePetFoodRegisterMutation = () => {
+  const jwtToken = Cookies.get("jwt");
   return useMutation({
-    mutationFn: async (data: PetFoodRegisterData) => await axios.post('http://localhost:4000/pet-petFood-register', data),
+    mutationFn: async (data: PetFoodRegisterData) => await axios.post('http://localhost:4000/api/users/registerFood', data, {
+      headers: {
+        Authorization: `${jwtToken}`,
+      }
+    }),
     mutationKey: 'PetFoodRegister',
     onSuccess: (e) => {
       alert(e.data.message)
@@ -83,8 +99,13 @@ export const usePetFoodRegisterMutation = () => {
 }
 
 export const usePetFoodDeleteMutation = () => {
+  const jwtToken = Cookies.get("jwt");
   return useMutation({
-    mutationFn: async (data: PetFoodDeleteData) => await axios.delete('http://localhost:4000/pet-petFood-delete', {data} ),
+    mutationFn: async (data: PetFoodDeleteData) => await axios.delete(`http://localhost:4000/api/users/deleteFood/${data.foodName}`,{
+      headers: {
+        Authorization: `${jwtToken}`,
+      }
+    }),
     mutationKey: 'PetFoodDelete',
     onSuccess: (e) => {
       if(e.data.message === '삭제완료') {
@@ -99,8 +120,13 @@ export const usePetFoodDeleteMutation = () => {
 }
 
 export const useImgRegisterMutation = () => {
+  const jwtToken = Cookies.get("jwt");
   return useMutation({
-    mutationFn: async (data: ImgRegisterData) => await axios.post('http://localhost:4000/pet-img-register', data),
+    mutationFn: async (data: ImgRegisterData) => await axios.post('http://localhost:4000/api/users/registerImg', data, {
+      headers: {
+        Authorization: `${jwtToken}`,
+      }
+    }),
     mutationKey: 'ImgRegister',
     onSuccess: (e) => {
       alert(e.data.message)

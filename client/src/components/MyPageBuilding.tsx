@@ -49,11 +49,10 @@ interface BuildingData {
 
 const MyPageBuilding:React.FC<BuildingData> = ({buildingName,buildingAddress,buildingPhoneNumber }) => {
 
-  const user = Cookies.get('jwt');
   const { mutate } = usePetBuildingDeleteMutation();
 
-  const handleDeleteClick = (buildingName:string, jwt:string | undefined) => {
-    mutate({buildingName, jwt});
+  const handleDeleteClick = (buildingName:string ) => {
+    mutate({ buildingName });
   }
 
   return ( 
@@ -61,7 +60,7 @@ const MyPageBuilding:React.FC<BuildingData> = ({buildingName,buildingAddress,bui
       <h1>{buildingName}</h1>
       <h2>{buildingAddress}</h2>
       <p>{buildingPhoneNumber}</p>
-      <MdDelete className="delete" size={30} onClick={() => handleDeleteClick(buildingName, user)}/>
+      <MdDelete className="delete" size={30} onClick={() => handleDeleteClick(buildingName)}/>
     </MapUnderBox>
   );
 }

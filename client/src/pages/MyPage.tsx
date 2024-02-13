@@ -79,7 +79,7 @@ const BottomContainer = styled.div`
 
 const MyPage = () => {
 
-  const userDB = 'http://localhost:4000/pet-users';
+  const userDB = 'http://localhost:4000/api/users';
 
   const {data} = useApiUserData(userDB);
 
@@ -95,11 +95,10 @@ const MyPage = () => {
   return ( 
     <div className="mypage">
       <MyPageTop></MyPageTop>
-      {data?.map(item => (
-      <MyPageContainer key={item.username}>
+      <MyPageContainer key={data?.username}>
         <ProfileBox>
-          <ProfileImg src={item.img}></ProfileImg>
-          <h1>{item.username}</h1>
+          <ProfileImg src={data?.img}></ProfileImg>
+          <h1>{data?.username}</h1>
         </ProfileBox>
         <TypeContainer>
           <TypeBox onClick={handleClick}>
@@ -112,14 +111,14 @@ const MyPage = () => {
           </TypeBox>
         </TypeContainer>
         <BottomContainer>
-          {bottomPage ? item.petFood.map((foodItem) => (
+          {bottomPage ? data?.petFood.map((foodItem) => (
             <MyPagePetFood 
               key={foodItem.foodName}
               foodName={foodItem.foodName} 
               foodPossible={foodItem.foodPossible} 
               foodImage={foodItem.foodImage}
             />
-          )) : item.petBuilding.map((buildingItem) => (
+          )) : data?.petBuilding.map((buildingItem) => (
             <MyPageBuilding
               key={buildingItem.content}
               buildingName={buildingItem.content}
@@ -129,7 +128,6 @@ const MyPage = () => {
           ))}
         </BottomContainer>
       </MyPageContainer>
-      ))}
     </div>
   );
 }

@@ -63,7 +63,6 @@ export interface PetBuildingRegister {
 
 export interface PetBuildingDelete {
   buildingName: string;
-  jwt: string | undefined;
 }
 
 export interface PetFoodRegisterData {
@@ -73,7 +72,7 @@ export interface PetFoodRegisterData {
   foodImage: string;
 }
 
-export type PetFoodDeleteData = Omit<PetFoodRegisterData, 'foodPossible' | 'foodImage'>
+export type PetFoodDeleteData = Omit<PetFoodRegisterData, 'foodPossible' | 'foodImage' | 'jwt'>
 
 export interface ImgRegisterData {
   jwt: string | undefined;
