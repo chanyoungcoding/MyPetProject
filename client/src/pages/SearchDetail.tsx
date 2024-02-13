@@ -81,7 +81,7 @@ const SearchDetail = () => {
 
   const jwt = Cookies.get('jwt');
   const {name} = useParams();
-  const PetFoodDB = 'http://localhost:4000/pet-foods';
+  const PetFoodDB = 'http://localhost:4000/api/petFoods/findFood';
 
   const [clickHeart, setClickHeart] = useState(false);
 

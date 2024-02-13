@@ -134,7 +134,7 @@ const Register = () => {
 
   const handleDoubleCheck = async (e:SyntheticEvent) => {
     e.preventDefault();
-    const userDB = 'http://localhost:4000/pet-usercheck';
+    const userDB = 'http://localhost:4000/api/users/checkUser';
     const response  = await axios.get(`${userDB}?name=${user.username}`)
     alert(response.data);
     if(response.data === '이름이 중복되었습니다.') {

@@ -79,10 +79,9 @@ const BottomContainer = styled.div`
 
 const MyPage = () => {
 
-  const user = Cookies.get('jwt');
   const userDB = 'http://localhost:4000/pet-users';
 
-  const {data} = useApiUserData(userDB, user);
+  const {data} = useApiUserData(userDB);
 
   const [bottomPage, setBottomPage] = useState(true);
 

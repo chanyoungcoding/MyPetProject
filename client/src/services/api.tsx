@@ -24,11 +24,16 @@ export function useApiPetFoodData(url:string, name:string | undefined) {
   return {data, isLoading, isError }
 }
 
-export function useApiUserData(url:string, name:string | undefined) {
+export function useApiUserData(url:string) {
+  const jwtToken = Cookies.get("jwt");
   const {data, isLoading, isError} = useQuery<UserData[]>({ 
     queryKey: ['UserData'], 
     queryFn: async () => {
-      const response = await axios.get(`${url}?name=${name}`);
+      const response = await axios.get(`${url}`,{
+        headers: {
+          Authorization: `${jwtToken}`,
+        }
+      });
       return response.data;
   }})
   return {data, isLoading, isError }
@@ -109,7 +114,7 @@ export const useImgRegisterMutation = () => {
 export const useRegisterMutation = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: async (data: UserRegisterData) => await axios.post('http://localhost:4000/register', data),
+    mutationFn: async (data: UserRegisterData) => await axios.post('http://localhost:4000/api/users/register', data),
     mutationKey: 'Register',
     onSuccess: (e) => {
       alert('회원가입에 성공하였습니다.');
@@ -125,13 +130,14 @@ export const useRegisterMutation = () => {
 export const useLoginMutation = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: async (data: UserLoginData) => await axios.post('http://localhost:4000/login', data),
+    mutationFn: async (data: UserLoginData) => await axios.post('http://localhost:4000/api/users/login', data),
     mutationKey: 'Login',
     onSuccess: (e) => {
-      Cookies.set('jwt', e.data.token, { expires: 6 / 24 })
+      Cookies.set("jwt", JSON.stringify(e.data.token), {expires: 1})
       navigate('/opet')
     },
-    onError: () => {
+    onError: (e) => {
+      console.log(e)
       alert('아이디 또는 비밀번호가 틀렸습니다.')
       navigate('/login')
     }

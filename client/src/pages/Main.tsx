@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import AddButton from '../imgs/add.png';
 import { Link } from "react-router-dom";
-import Cookies from "js-cookie";
 import { useApiUserData } from "../services/api";
 import { FaPen } from "react-icons/fa";
 
@@ -62,10 +61,9 @@ const Linkto = styled(Link)`
 
 
 const Main = () => {
-  const user = Cookies.get('jwt');
-  const userDB = 'http://localhost:4000/pet-users';
+  const userDB = 'http://localhost:4000/api/users';
 
-  const { data } = useApiUserData(userDB, user);
+  const { data, isLoading, isError } = useApiUserData(userDB);
 
   const calculateDaysDifference = (selectedDate:  string | Date) => {
     const currentDate = new Date();
@@ -77,10 +75,13 @@ const Main = () => {
     return Day;
   };
 
+  if(isLoading) return <p>로딩중입니다..</p>
+  if(isError) return <p>에러가 발생했습니다..</p>
+
   return ( 
     <MainContainer>
       <MainInstallPetBox>
-        {data && data[0].img ? (
+        {data?.[0]?.img ? (
           <PetContainer>
             <PetBox property={data[0].img}></PetBox>
             <PetChangeBox>

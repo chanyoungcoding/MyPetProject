@@ -1,16 +1,15 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const session = require('express-session'); 
-const passport = require('passport');
-const LocalStrategy = require('passport-local');
 const jwt = require('jsonwebtoken');
 
 require("dotenv").config();
 
 const PetMap = require('./models/PetMapInformation');
-const PetFoodInformation = require('./models/PetPossibleFood');
 const User = require('./models/user');
+
+const userRoute = require("./Routes/userRoute");
+const foodRoute = require("./Routes/petFoodsRoute");
 
 //MongoDB 연결
 const dbUrl = process.env.DB;
@@ -25,53 +24,21 @@ mongoose.connect(dbUrl)
 
 const app = express();
 
-const sessionConfig = {
-  secret: 'this-is-your-secret-code', 
-  resave: false,
-  saveUninitialized: false,
-}
-
 const secretKey = 'your-secret-key';
 
-app.use(session(sessionConfig));
-
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(passport.initialize());
-app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+app.use('/api/users', userRoute);
+app.use('/api/petFoods', foodRoute);
 
 app.get('/pet-maps', async (req,res) => {
   const petMapInformation = await PetMap.find({})
   res.json(petMapInformation);
-})
-
-app.get('/pet-foods', async (req,res) => {
-  const name = req.query.name
-  const petFoodInformation = await PetFoodInformation.find({name: name});
-  res.json(petFoodInformation);
-})
-
-app.get('/pet-users', async (req,res) => {
-  const jwtToken = req.query.name
-  const {username} = jwt.verify(jwtToken, secretKey);
-  const user = await User.find({username: username});
-  res.json(user);
-})
-
-app.get('/pet-usercheck', async (req,res) => {
-  const username = req.query.name;
-  const user = await User.find({username: username});
-  if(user.length > 0) {
-    return res.json('이름이 중복되었습니다.')
-  } else {
-    return res.json('사용할 수 있습니다.')
-  }
 })
 
 app.post('/pet-building-register', async(req,res) => {
@@ -182,28 +149,6 @@ app.post('/pet-img-register', async (req,res) => {
     res.json({ success: false, message: '사용자를 찾을 수 없습니다.' });
   }
 })
-
-app.post('/login', passport.authenticate('local'), (req,res) => {
-  const username = req.body.username;
-  const user = { username: username };
-  const token = jwt.sign(user, secretKey, { expiresIn: '4h' }); // 4시간 동안 유효
-  res.json({ success: true, message: '로그인 성공', token });
-})
-
-app.post('/register', async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
-    const user = new User({ email, username });
-    const registeredUser = await User.register(user, password);
-    res.json(registeredUser);
-  } catch (error) {
-    if (error.name === 'MongoError' && error.code === 11000) {
-      res.status(400).json({ message: '이미 등록된 이메일입니다.' });
-    } else {
-      res.status(500).json({ message: '회원 가입 중 오류가 발생했습니다.' });
-    }
-  }
-});
 
 app.delete('/pet-petFood-delete', async (req, res) => {
   const jwtToken = req.body.jwt;
