@@ -10,8 +10,7 @@ const MapUnderBox = styled.div`
   height: 140px;
   margin: 0px auto 20px;
   padding: 10px;
-  background: rgb(134,166,227);
-  background: linear-gradient(90deg, rgba(134,166,227,1) 0%, rgba(229,224,230,1) 62%, rgba(221,228,243,1) 100%);
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   border-radius: 20px;
   h1 {
     font-style: normal;
@@ -29,8 +28,8 @@ const MapUnderBox = styled.div`
     margin-top: 20px;
     padding: 10px 30px;
     font-size: 20px;
-    background: rgb(134,147,227);
-    background: linear-gradient(90deg, rgba(134,147,227,1) 37%, rgba(227,224,230,1) 81%, rgba(233,221,243,1) 100%);
+    background-color: white;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     border-radius: 15px;
   }
   .delete {

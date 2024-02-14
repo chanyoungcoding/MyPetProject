@@ -56,6 +56,7 @@ const DetailHeader = styled.div`
     position: absolute;
     right: 30px;
     top: -80px;
+    color: red;
   }
 `
 

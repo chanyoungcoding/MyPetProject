@@ -1,8 +1,31 @@
 import axios, { AxiosError } from 'axios';
 import { useMutation, useQuery } from 'react-query';
-import { PetMapData, PetFoodData, UserRegisterData, UserLoginData, ImgRegisterData, UserData, PetFoodRegisterData, PetBuildingRegister, PetFoodDeleteData, PetBuildingDelete } from '../interface/interface';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import Swal from "sweetalert2";
+
+import { 
+  PetMapData, 
+  PetFoodData, 
+  UserRegisterData,
+  UserLoginData, 
+  ImgRegisterData,
+  UserData,
+  PetFoodRegisterData,
+  PetBuildingRegister,
+  PetFoodDeleteData,
+  PetBuildingDelete
+} from '../interface/interface';
+
+const alertPetFood = (message:string) => {
+  Swal.fire({
+    icon: "success",
+    title: `${message}`,
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+  });
+}
 
 
 export function useApiPetMapData(url:string) {
@@ -90,7 +113,8 @@ export const usePetFoodRegisterMutation = () => {
     }),
     mutationKey: 'PetFoodRegister',
     onSuccess: (e) => {
-      alert(e.data.message)
+      const message = e.data.message;
+      alertPetFood(message);
     },
     onError: (e) => {
       console.log(e);
