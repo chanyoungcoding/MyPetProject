@@ -16,11 +16,11 @@ const loginUser = async (req,res) => {
   try {
     const user = await User.findOne({username});
 
-    if(!user) return res.status(400).json("Invalid email or password");
+    if(!user) return res.status(400).json({message: "아이디 또는 비밀번호가 확실하지 않습니다."});
 
     const isValidPassword = await bcrypt.compare(password, user.password);
 
-    if(!isValidPassword) return res.status(400).json("Invalid email or password...")
+    if(!isValidPassword) return res.status(400).json({message: "아이디 또는 비밀번호가 확실하지 않습니다."})
     
     const token = createToken(user.username);
 
@@ -28,7 +28,7 @@ const loginUser = async (req,res) => {
 
   } catch(error) {
     console.log(error);
-    res.status(500).json(eroor);
+    res.status(500).json({message: '알 수 없는 오류가 있습니다.'});
   }
 }
 
@@ -63,7 +63,7 @@ const registerUser =  async (req, res) => {
 
     await newUser.save();
 
-    res.status(200).json({message: '회원가입에 성공하엿습니다.'})
+    res.status(200).json({message: '회원가입에 성공하였습니다.'})
 
   } catch (error) {
     if (error.name === 'MongoError' && error.code === 11000) {
@@ -110,13 +110,13 @@ const registerBuildingUser = async(req,res) => {
       'petBuilding.content': content
     });
     if(existingUser) {
-      return res.json({success:false, message: '이미 좋아요를 등록하셨습니다.'})
+      return res.status(400).json({success:false, message: '이미 좋아요를 등록하셨습니다.'})
     }
 
     const user = await User.findOne({ username });
     
     if (user?.petBuilding?.length >= 10) {
-      return res.json({ success: false, message: '10개 이상 좋아요를 등록할 수 없습니다.' });
+      return res.status(400).json({ success: false, message: '10개 이상 좋아요를 등록할 수 없습니다.' });
     }
 
     const updatedUser = await User.findOneAndUpdate(
@@ -132,9 +132,9 @@ const registerBuildingUser = async(req,res) => {
       }
     );
     if(updatedUser) {
-      return res.send({ success: true, message: '마이페이지에 등록했습니다.' });
+      return res.status(200).send({ success: true, message: '마이페이지에 등록했습니다.' });
     } else {
-      return res.send({ success: false, message: '등록에 실패했습니다.' });
+      return res.status(400).send({ success: false, message: '등록에 실패했습니다.' });
     }
 
   } catch(error) {
@@ -156,13 +156,13 @@ const registerFoodUser = async (req, res) => {
     });
 
     if (existingUser) {
-      return res.json({ success: false, message: '이미 좋아요를 등록하셨습니다.' });
+      return res.status(400).json({ success: false, message: '이미 좋아요를 등록하셨습니다.' });
     }
 
     const user = await User.findOne({ username });
 
     if (user?.petBuilding?.length >= 10) {
-      return res.json({ success: false, message: '10개 이상 좋아요를 등록할 수 없습니다.' });
+      return res.status(400).json({ success: false, message: '10개 이상 좋아요를 등록할 수 없습니다.' });
     }
 
     // petFood 추가
@@ -180,9 +180,9 @@ const registerFoodUser = async (req, res) => {
     );
 
     if (updatedUser) {
-      return res.send({ success: true, message: '마이페이지에 등록했습니다.' });
+      return res.status(200).send({ success: true, message: '마이페이지에 등록했습니다.' });
     } else {
-      return res.send({ success: false, message: '등록에 실패했습니다.' });
+      return res.status(200).send({ success: false, message: '등록에 실패했습니다.' });
     }
 
   } catch (error) {
@@ -209,14 +209,14 @@ const registerImgUser = async (req,res) => {
       { new: true } 
     );
     if (updatedUser) {
-      res.json({ success: true, message: '등록을 완료했어요.' });
+      res.status(200).json({ success: true, message: '등록을 완료했어요.' });
     } else {
-      res.json({ success: false, message: '사용자를 찾을 수 없습니다.' });
+      res.status(400).json({ success: false, message: '사용자를 찾을 수 없습니다.' });
     }
 
   } catch(error) {
     console.log(error)
-    res.status(500).json(error)
+    res.status(500).json({message: '알 수 없는 오류로 취소돼었습니다.'})
   }
 }
 
@@ -232,13 +232,13 @@ const deleteFoodUser = async (req, res) => {
     );
 
     if (!user) {
-      return res.status(404).json({ error: '사용자를 찾을 수 없습니다.' });
+      return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
     }
 
     return res.json({ message: '삭제완료', user });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: '서버 오류' });
+    return res.status(500).json({ message: '서버 오류' });
   }
 }
 
@@ -254,13 +254,13 @@ const deleteBuildingUser = async (req, res) => {
     );
 
     if (!user) {
-      return res.status(404).json({ error: '사용자를 찾을 수 없습니다.' });
+      return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
     }
 
-    return res.json({ message: '삭제완료', user });
+    return res.status(200).json({ message: '삭제완료', user });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ error: '서버 오류' });
+    return res.status(500).json({ message: '서버 오류' });
   }
 }
 

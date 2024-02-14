@@ -17,13 +17,39 @@ import {
   PetBuildingDelete
 } from '../interface/interface';
 
-const alertPetFood = (message:string) => {
+const alertSuccess = (message:string) => {
   Swal.fire({
     icon: "success",
     title: `${message}`,
     showConfirmButton: false,
     timer: 1500,
     timerProgressBar: true,
+  });
+}
+
+const alertRegisterSuccess = (message:string) => {
+  Swal.fire({
+    icon: "success",
+    title: `${message}`,
+    confirmButtonText: "확인",
+    confirmButtonColor: "#3085d6",
+    showConfirmButton: true,
+  }).then(result => {
+    if(result.isConfirmed) {
+      const navigate = useNavigate();
+      navigate('/login')
+    }
+  });
+}
+
+const alertError = (message:string) => {
+  Swal.fire({
+    icon: "error",
+    title: `${message}`,
+    showCancelButton:true,
+    cancelButtonText:"확인",
+    cancelButtonColor:"#d33",
+    showConfirmButton: false,
   });
 }
 
@@ -73,10 +99,14 @@ export const usePetBuildingRegisterMutation = () => {
     }),
     mutationKey: 'PetBuildingRegister',
     onSuccess: (e) => {
-      alert(e.data.message)
+      const message = e.data.message;
+      alertSuccess(message)
     },
-    onError: (e) => {
-      console.log(e);
+    onError: (error:AxiosError) => {
+      if (error.response) {
+        const responseData = error.response.data as { message: string }; // 타입 단언
+        alertError(responseData.message);
+      }
     }
   })
 }
@@ -92,12 +122,14 @@ export const usePetBuildingDeleteMutation = () => {
     mutationKey: 'PetBuildingDelete',
     onSuccess: (e) => {
       if(e.data.message === '삭제완료') {
-        alert('삭제 완료!!')
+        return window.location.reload();
       }
-      window.location.reload();
     },
-    onError: (e) => {
-      console.log(e);
+    onError: (error:AxiosError) => {
+      if (error.response) {
+        const responseData = error.response.data as { message: string }; // 타입 단언
+        alertError(responseData.message);
+      }
     }
   })
 }
@@ -114,10 +146,13 @@ export const usePetFoodRegisterMutation = () => {
     mutationKey: 'PetFoodRegister',
     onSuccess: (e) => {
       const message = e.data.message;
-      alertPetFood(message);
+      alertSuccess(message);
     },
-    onError: (e) => {
-      console.log(e);
+    onError: (error:AxiosError) => {
+      if (error.response) {
+        const responseData = error.response.data as { message: string }; // 타입 단언
+        alertError(responseData.message);
+      }
     }
   })
 }
@@ -133,12 +168,14 @@ export const usePetFoodDeleteMutation = () => {
     mutationKey: 'PetFoodDelete',
     onSuccess: (e) => {
       if(e.data.message === '삭제완료') {
-        alert('삭제 완료!!')
+        return window.location.reload();
       }
-      window.location.reload();
     },
-    onError: (e) => {
-      console.log(e);
+    onError: (error:AxiosError) => {
+      if (error.response) {
+        const responseData = error.response.data as { message: string }; // 타입 단언
+        alertError(responseData.message);
+      }
     }
   })
 }
@@ -153,10 +190,14 @@ export const useImgRegisterMutation = () => {
     }),
     mutationKey: 'ImgRegister',
     onSuccess: (e) => {
-      alert(e.data.message)
+      const message = e.data.message;
+      alertSuccess(message);
     },
-    onError: (e) => {
-      console.log(e);
+    onError: (error:AxiosError) => {
+      if (error.response) {
+        const responseData = error.response.data as { message: string }; // 타입 단언
+        alertError(responseData.message);
+      }
     }
   })
 }
@@ -167,11 +208,14 @@ export const useRegisterMutation = () => {
     mutationFn: async (data: UserRegisterData) => await axios.post('http://localhost:4000/api/users/register', data),
     mutationKey: 'Register',
     onSuccess: (e) => {
-      alert('회원가입에 성공하였습니다.');
-      navigate('/login')
+      const message = e.data.message;
+      alertRegisterSuccess(message);
     },
     onError: (error:AxiosError) => {
-      alert('등록된 이메일 입니다.')
+      if (error.response) {
+        const responseData = error.response.data as { message: string }; // 타입 단언
+        alertError(responseData.message);
+      }
       navigate('/register')
     }
   })
@@ -186,10 +230,11 @@ export const useLoginMutation = () => {
       Cookies.set("jwt", JSON.stringify(e.data.token), {expires: 1})
       navigate('/opet')
     },
-    onError: (e) => {
-      console.log(e)
-      alert('아이디 또는 비밀번호가 틀렸습니다.')
-      navigate('/login')
+    onError: (error:AxiosError) => {
+      if (error.response) {
+        const responseData = error.response.data as { message: string }; // 타입 단언
+        alertError(responseData.message);
+      }
     }
   })
 }

@@ -111,8 +111,6 @@ const MapUnderBox = styled.div`
 
 const KakaoMap = () => {
 
-  const jwt = Cookies.get('jwt');
-
   const PetMapDB = 'http://localhost:4000/api/map';
 
   
@@ -254,7 +252,7 @@ const KakaoMap = () => {
   }
 
   const onRegisterBuilding = (content:string, address:string, phoneNumber: string | undefined) => {
-    const data = {content:content, address: address, phoneNumber: phoneNumber, jwt: jwt}
+    const data = {content:content, address: address, phoneNumber: phoneNumber }
     mutate(data);
   }
 

@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { usePetBuildingDeleteMutation } from "../services/api";
 import { MdDelete } from "react-icons/md";
+import Swal from "sweetalert2";
 
 const MapUnderBox = styled.div`
   position: relative;
@@ -51,7 +52,22 @@ const MyPageBuilding:React.FC<BuildingData> = ({buildingName,buildingAddress,bui
   const { mutate } = usePetBuildingDeleteMutation();
 
   const handleDeleteClick = (buildingName:string ) => {
-    mutate({ buildingName });
+    
+    const alertDeleteSuccess = () => {
+      Swal.fire({
+        icon: "question",
+        title: "삭제하시겟습니까?",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#3085d6",
+        showConfirmButton: true,
+      }).then(result => {
+        if(result.isConfirmed) {
+          return mutate({ buildingName });
+        }
+      });
+    }
+
+    alertDeleteSuccess();
   }
 
   return ( 

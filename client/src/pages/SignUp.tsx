@@ -2,6 +2,7 @@ import { SyntheticEvent, useState } from "react";
 import styled from "styled-components";
 import { CgClose } from "react-icons/cg";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 import { UserRegisterData } from "../interface/interface";
 import { useRegisterMutation } from "../services/api";
@@ -14,7 +15,7 @@ const SignUpContainer = styled.div`
   flex-direction: column;
   align-items: center;
   position: relative;
-  height: 100vh;
+  height: 80vh;
   h1 {
     padding: 15px;
     font-size: 24px;
@@ -40,7 +41,9 @@ const SignUpContainer = styled.div`
     font-weight: bold;
     outline: none;
     border: none;
-    background: linear-gradient(90deg, rgba(134,166,227,1) 0%, rgba(157,159,235,1) 63%, rgba(156,126,238,1) 100%);
+    background: #EBEBEB;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    cursor: pointer;
   }
 `
 
@@ -65,7 +68,8 @@ const SignUpForm = styled.form`
     border-radius: 10px;
     border: none;
     outline: none;
-    background-color: #9091E9;
+    background-color: #EBEBEB;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   }
   p {
     margin-top: 5px;
@@ -77,9 +81,10 @@ const SignUpForm = styled.form`
 const SignUpNameBox = styled.div`
   button {
     margin-left: 10px;
-    padding: 15px;
+    padding: 15px 10px;
     background-color: #dddddd;
     color: #858585;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     font-size: 16px;
     font-weight: bold;
     border-radius: 10px;
@@ -99,6 +104,7 @@ const SignUpEmailBox = styled.div`
   flex-direction: column;
 `
 
+
 const Register = () => {
   const [user, setUser] = useState<UserRegisterData>({
     username: '',
@@ -110,55 +116,82 @@ const Register = () => {
   const [possibleName, setPossibleName] = useState(false);
   const [passwordTest, setPasswordTest] = useState(true);
 
-  const { mutate } = useRegisterMutation();
   const navigate = useNavigate();
+  const { mutate } = useRegisterMutation();
 
-  const validateName = (input: string): boolean => {
-    const validCharacters = /^[a-z0-9]+$/;
-    const startsWithLowerCase = /^[a-z]/;
-    const validLength = /^.{4,12}$/;
-    return validCharacters.test(input) && startsWithLowerCase.test(input) && validLength.test(input);
-  };
+  const alertError = (message:string) => {
+    Swal.fire({
+      icon: "error",
+      title: `${message}`,
+      showCancelButton:true,
+      cancelButtonText:"확인",
+      cancelButtonColor:"#d33",
+      showConfirmButton: false,
+    });
+  }
 
-  const validatePassword = (input: string): boolean => {
-    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d|\W).{6,20}$/;
-    return pattern.test(input);
-  };
+  const alertSuccess = (message:string) => {
+    Swal.fire({
+      icon: "success",
+      title: `${message}`,
+      confirmButtonText: "확인",
+      confirmButtonColor: "#3085d6",
+      showConfirmButton: true,
+    });
+  }
 
   const handleNameBlur = () => {
+
+    const validateName = (input: string): boolean => {
+      const validCharacters = /^[a-z0-9]+$/;
+      const startsWithLowerCase = /^[a-z]/;
+      const validLength = /^.{4,12}$/;
+      return validCharacters.test(input) && startsWithLowerCase.test(input) && validLength.test(input);
+    };
+
     setNameTest(validateName(user.username));
   };
+
   const handlePasswordBlur = () => {
+
+    const validatePassword = (input: string): boolean => {
+      const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d|\W).{6,20}$/;
+      return pattern.test(input);
+    };
+
     setPasswordTest(validatePassword(user.password));
   };
 
   const handleDoubleCheck = async (e:SyntheticEvent) => {
     e.preventDefault();
+
     const userDB = 'http://localhost:4000/api/users/checkUser';
     const response  = await axios.get(`${userDB}?name=${user.username}`)
-    alert(response.data);
+
     if(response.data === '이름이 중복되었습니다.') {
-      setPossibleName(false);
+      alertError(response.data)
+      return setPossibleName(false);
     } else {
-      setPossibleName(true);
+      alertSuccess(response.data)
+      return setPossibleName(true);
     }
   }
 
   const handleLegister = () => {
     if (!user.username || !user.email || !user.password) {
-      alert("모든 정보를 입력해 주세요.");
+      alertError("모든 정보를 입력해 주세요.")
       return;
     }
     if (!possibleName) {
-      alert('이름이 중복되었습니다.')
+      alertError("이름이 중복되었습니다.")
       return;
     }
     if (user.password !== user.checkpassword) {
-      alert('비밀번호 확인이 잘못됐습니다.')
+      alertError('비밀번호 확인이 잘못됐습니다.')
       return;
     }
     if (!passwordTest) {
-      alert('비밀번호를 제대로 입력해 주세요.')
+      alertError('비밀번호를 제대로 입력해 주세요.')
       return;
     }
     const data:UserRegisterData = user;
@@ -172,14 +205,10 @@ const Register = () => {
     }))
   }
 
-  const handleBack = () => {
-    navigate('/login')
-  }
-
   return ( 
     <SignUpContainer>
       <SignUpTop>
-        <CgClose className="CgClose" onClick={handleBack} size={30}/>
+        <CgClose className="CgClose" onClick={() => navigate('/login')} size={30}/>
         <h1>회원가입</h1>
       </SignUpTop>
       <img src={SignUpPet} alt="petImage" />

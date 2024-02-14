@@ -58,7 +58,6 @@ export interface PetBuildingRegister {
   content: string;
   address: string;
   phoneNumber: string | undefined;
-  jwt: string | undefined;
 }
 
 export interface PetBuildingDelete {

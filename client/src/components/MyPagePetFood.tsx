@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { MdDelete } from "react-icons/md";
 import { usePetFoodDeleteMutation } from "../services/api";
+import Swal from "sweetalert2";
 
 const FoodBox = styled.div`
   position: relative;
@@ -53,6 +54,7 @@ interface FoodData {
 
 const MyPagePetFood:React.FC<FoodData> = ({foodName, foodPossible, foodImage}) => {
 
+
   const navigate = useNavigate();
   const { mutate } = usePetFoodDeleteMutation();
   
@@ -61,7 +63,22 @@ const MyPagePetFood:React.FC<FoodData> = ({foodName, foodPossible, foodImage}) =
   }
 
   const handleDeleteClick = (foodName:string) => {
-    mutate({foodName});
+
+    const alertDeleteSuccess = () => {
+      Swal.fire({
+        icon: "question",
+        title: "삭제하시겟습니까?",
+        confirmButtonText: "확인",
+        confirmButtonColor: "#3085d6",
+        showConfirmButton: true,
+      }).then(result => {
+        if(result.isConfirmed) {
+          return mutate({foodName});
+        }
+      });
+    }
+
+    alertDeleteSuccess();
   }
 
   return ( 

@@ -32,15 +32,16 @@ const InputContainer = styled.div`
   border-radius: 30px 30px 0px 0px;
   border-top: 3px solid black;
   button {
-    width: 200px;
+    width: 250px;
     margin: 10px;
     padding: 10px 30px;
     outline: none;
     border: none;
     border-radius: 15px;
-    font-size: 20px;
-    color: white;
-    background: linear-gradient(90deg, rgba(134,166,227,1) 0%, rgba(157,159,235,1) 63%, rgba(156,126,238,1) 100%);
+    font-size: 1rem;
+    font-weight: bold;
+    color: #757575;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     cursor: pointer;
   }
   img {
@@ -57,7 +58,8 @@ const InputBox = styled.div`
     margin-bottom: 30px;
     padding: 10px 10px 10px 50px;
     font-size: 24px;
-    background-color: #9091E9;
+    background-color: #EBEBEB;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border-radius: 15px;
     border: none;
     outline: none;
