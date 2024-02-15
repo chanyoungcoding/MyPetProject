@@ -94,7 +94,6 @@ const KakaoMap = () => {
   const [petShopName, setpetShopName] = useState('');
   const [filterValue, setFilterValue] = useState('');
   const [item, SetItem] = useState<PositionData[] | null>(null);
-  const [open, setOpen] = useState(false);
   
   // 검색시 해당 이름의 호텔,병원,카페 정보를 가져옴
   const findContent = (text: string, content: PositionData[]) => {
@@ -239,10 +238,10 @@ const KakaoMap = () => {
         <KategorieMapButton onClick={onSearch} name="병원"><FaHospital size={20}/></KategorieMapButton>
       </KategorieMap>
 
-      <div id="map" style={{ width: '100%', height: '80vh' }}></div>
+      <div id="map" style={{ width: '100%', height: '100vh' }}></div>
       <BottomSheet 
         open={true}
-        snapPoints={({ minHeight, maxHeight }) => [minHeight * 0.2, maxHeight * 0.7]}
+        snapPoints={({ minHeight, maxHeight }) => [minHeight * 0.7, maxHeight * 0.4]}
         blocking={false}
       >
         {item?.map((item, index)=> 
