@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import React from "react";
 import styled from "styled-components";
 import { usePetBuildingDeleteMutation } from "../services/api";

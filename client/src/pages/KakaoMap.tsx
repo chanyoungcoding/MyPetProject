@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import styled from "styled-components";
 import { IoSearchOutline } from "react-icons/io5";
 import { FaHotel, FaHospital } from "react-icons/fa";
@@ -13,6 +13,7 @@ import '../styles/kakaomap.scss';
 import Cookies from "js-cookie";
 
 import 'react-spring-bottom-sheet/dist/style.css'
+import KakaoMapBox from "../components/KakaoMapBox";
 
 declare global {
   interface Window {
@@ -71,42 +72,6 @@ const KategorieMapButton = styled.button`
   border-radius: 25px;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   cursor: pointer;
-`
-
-const MapUnderBox = styled.div`
-  position: relative;
-  width: 90%;
-  height: 140px;
-  margin: 0px auto 20px;
-  padding: 10px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-  border-radius: 20px;
-  h1 {
-    font-style: normal;
-    padding: 10px 0px;
-    font-size: 24px;
-  }
-  h2 {
-    margin: 10px 0px;
-  }
-  p {
-    position: absolute;
-    bottom: -8px;
-    left: 20px;
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 30px;
-    font-size: 20px;
-    background-color: #e9e9e9;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    border-radius: 15px;
-  }
-  .heart {
-    position: absolute;
-    bottom: 22px;
-    right: 20px;
-    color: red;
-  }
 `
 
 const KakaoMap = () => {
@@ -253,10 +218,10 @@ const KakaoMap = () => {
     setpetShopName(searchName)
   }
 
-  const onRegisterBuilding = (content:string, address:string, phoneNumber: string | undefined) => {
+  const onRegisterBuilding = useCallback((content:string, address:string, phoneNumber: string | undefined) => {
     const data = {content:content, address: address, phoneNumber: phoneNumber, jwt: jwt}
     mutate(data);
-  }
+  },[])
 
   return (
     <KakaoMapContainer>
@@ -283,12 +248,14 @@ const KakaoMap = () => {
         blocking={false}
       >
         {item?.map((item, index)=> 
-          <MapUnderBox key={index}>
-            <h1>{item.content}</h1>
-            <h2>{item.address}</h2>
-            <p>{item.phoneNumber}</p>
-            <FaHeart className="heart" size={20} onClick={() => onRegisterBuilding(item.content, item.address, item.phoneNumber)}/>
-          </MapUnderBox> 
+        <div key={index}>
+          <KakaoMapBox
+            content = {item.content}
+            address = {item.address}
+            phoneNumber = {item.phoneNumber}
+            onRegisterBuilding = {onRegisterBuilding}
+          />
+        </div>
         )}
       </BottomSheet>
     </KakaoMapContainer>
