@@ -216,7 +216,6 @@ const KakaoMap = () => {
     setpetShopName(searchName)
   }
 
-
   const onRegisterBuilding = useCallback((content:string, address:string, phoneNumber: string | undefined) => {
     const data = {content:content, address: address, phoneNumber: phoneNumber}
     mutate(data);
