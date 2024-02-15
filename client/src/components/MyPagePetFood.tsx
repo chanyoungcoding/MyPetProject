@@ -10,14 +10,22 @@ const FoodBox = styled.div`
   position: relative;
   display: flex;
   width: 90%;
-  height: 150px;
+  height: 300px;
   margin-bottom: 10px;
   border-radius: 20px;
-  background-color: aliceblue;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   .delete {
     position: absolute;
     bottom: 15px;
     right: 10px;
+    font-size: 4rem;
+    cursor: pointer;
+  }
+  @media screen and (max-width: 470px) {
+    height: 150px;
+    .delete {
+      font-size: 2rem;
+    }
   }
 `
 
@@ -25,24 +33,50 @@ const FoodBoxLeft = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-grow: 1;
   img {
-    width: 130px;
-    height: 130px;
+    width: 90%;
+    height: 80%;
     object-fit: cover;
     border-radius: 15px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  }
+  @media screen and (max-width: 470px) {
+    img {
+      width: 90%;
+      height: 75%;
+    }
   }
 `
 const FoodBoxRight = styled.div`
-    flex-grow: 2;
+    flex-grow: 1;
+    padding: 30px;
     h1 {
       margin: 10px 0px;
-      font-size: 2rem;
+      font-size: 3rem;
       font-weight: bold;
     }
     h2 {
       margin-bottom: 30px;
-      font-size: 20px;
+      font-size: 2rem;
+    }
+    .button-4 {
+      width: 300px;
+      padding: 15px;
+      font-size: 1.5rem;
+    }
+    @media screen and (max-width: 470px) {
+      padding: 10px 10px 0px;
+      h1 {
+        font-size: 1.5rem;
+      }
+      h2 {
+        font-size: 1rem;
+      }
+      .button-4 {
+        width: 125px;
+        padding: 5px;
+        font-size: 1rem;
+      }
     }
 `
 
@@ -91,7 +125,7 @@ const MyPagePetFood:React.FC<FoodData> = ({foodName, foodPossible, foodImage}) =
           <h2>{foodPossible}</h2>
           <button className="button-4" onClick={goToFoodPage}>자세한 정보</button>
         </FoodBoxRight>
-        <MdDelete className="delete" onClick={() => handleDeleteClick(foodName)} size={30} />
+        <MdDelete className="delete" onClick={() => handleDeleteClick(foodName)} />
       </FoodBox>
   );
 }

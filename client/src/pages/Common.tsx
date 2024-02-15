@@ -30,7 +30,7 @@ const Common = () => {
   
   return ( 
     <Main>
-      <Navbar/>
+      <Navbar text="O&#09;&#45;&#09;Pet"/>
       <div className="container">
         <Outlet/>
       </div>

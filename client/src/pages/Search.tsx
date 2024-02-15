@@ -69,8 +69,8 @@ const SwiperContainer = styled.div`
 `
 
 const SwiperInner = styled.div`
-  width: 155px;
-  height: 155px;
+  width: 100%;
+  height: 200px;
   background: linear-gradient(to left, rgba(0,0,0, 0.4), rgba(0,0,0,0.4)), url(${props => props.property}) no-repeat center/cover;
   border-radius: 10px;
   color: ${props => props.color || 'white'};
@@ -118,11 +118,25 @@ const Search = () => {
         <Swiper
           modules={[Autoplay]}
           spaceBetween={50}
-          slidesPerView={2}
+          slidesPerView={1}
           navigation
           autoplay={{
             delay: 3000,
             disableOnInteraction: false,
+          }}
+          breakpoints={{
+            450: {
+              slidesPerView: 2,
+              spaceBetween: 30
+            },
+            900: {
+              slidesPerView: 3,
+              spaceBetween: 40
+            },
+            1200: {
+              slidesPerView: 4,
+              spaceBetween: 50
+            }
           }}
           loop={true}
         >
