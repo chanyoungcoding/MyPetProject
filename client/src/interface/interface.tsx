@@ -74,7 +74,6 @@ export interface PetFoodRegisterData {
 export type PetFoodDeleteData = Omit<PetFoodRegisterData, 'foodPossible' | 'foodImage' | 'jwt'>
 
 export interface ImgRegisterData {
-  jwt: string | undefined;
   imageUrl: string;
   petName: string;
   selectedDate: Date | null;

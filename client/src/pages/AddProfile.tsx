@@ -3,7 +3,6 @@ import PetPick from "../components/PetPick";
 import DatePick from "../components/DatePick";
 import NamePick from "../components/NamePick";
 import styled from "styled-components";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import { useImgRegisterMutation } from "../services/api";
 import axios from "axios";
@@ -33,7 +32,6 @@ const AddProfile = () => {
   const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const jwt = Cookies.get('jwt');
   const navigate = useNavigate();
 
   const { mutate } = useImgRegisterMutation();
@@ -71,7 +69,7 @@ const AddProfile = () => {
 
       const imageUrl = response.data.secure_url;
 
-      const data = {imageUrl, jwt, petName, selectedDate};
+      const data = {imageUrl, petName, selectedDate};
       mutate(data);
       setLoading(false);
       navigate('/opet')
