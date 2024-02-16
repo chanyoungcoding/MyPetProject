@@ -1,12 +1,20 @@
 import styled from "styled-components";
-import AddButton from '../imgs/add.png';
 import { Link } from "react-router-dom";
-import { useApiUserData } from "../services/api";
 import { FaPen } from "react-icons/fa";
+import { useRecoilValue } from "recoil";
+
+import AOS from "aos";
+import "aos/dist/aos.css";
+
+import { dogstalks } from "../recoil/GlobalManagement";
+import { useApiUserData } from "../services/api";
+import AddButton from '../imgs/add.png';
+import { useEffect } from "react";
 
 const MainContainer = styled.div`
   height: 95vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 `
@@ -59,9 +67,31 @@ const Linkto = styled(Link)`
   cursor: pointer;
 `
 
+const RandomTalkBox = styled.div`
+  margin: 40px 30px 10px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.06) 0px 1px 2px 0px;
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  p {
+    margin: 10px 0px;
+  }
+`
+
 
 const Main = () => {
+
+  useEffect(() => {
+    AOS.init();
+  },[])
+
   const userDB = 'http://localhost:4000/api/users';
+
+  const randomTalk = useRecoilValue(dogstalks);
 
   const { data, isLoading, isError } = useApiUserData(userDB);
 
@@ -74,6 +104,13 @@ const Main = () => {
     const Day = Math.abs(dayDifference) - 1
     return Day;
   };
+
+  const getRandomTalk = () => {
+    const randomIndex = Math.floor(Math.random() * randomTalk.length);
+    return randomTalk[randomIndex];
+  };
+
+  const talk = getRandomTalk();
 
   if(isLoading) return <p>로딩중입니다..</p>
   if(isError) return <p>에러가 발생했습니다..</p>
@@ -99,6 +136,10 @@ const Main = () => {
           </>
         )}
       </MainInstallPetBox>
+      <RandomTalkBox data-aos="flip-up" data-aos-duration="1000">
+        <h1>{talk.talk}</h1>
+        <p>-{talk.author}</p>
+      </RandomTalkBox>
     </MainContainer>
   );
 }

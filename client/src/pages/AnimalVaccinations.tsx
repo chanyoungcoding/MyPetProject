@@ -15,14 +15,17 @@ const VaccinationContainer = styled.div`
 const VaccinationBox = styled.div`
   width: 370px;
   margin: 30px 0px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 15px;
 `
 
 const VaccinationBoxTop = styled.div`
-  background-color: aliceblue;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: white;
   border-radius: 15px 15px 0px 0px;
+  
   h1 {
     padding: 50px;
   }
@@ -30,7 +33,7 @@ const VaccinationBoxTop = styled.div`
 
 const VaccinationBoxBottom = styled.div`
   padding: 20px 5px;
-  background-color: white;
+  background-color: #f7f7f7;
   line-height: 30px;
   border-radius: 0px 0px 15px 15px;
 `

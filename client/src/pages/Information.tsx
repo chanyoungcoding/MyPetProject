@@ -1,17 +1,22 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 import dog from '../imgs/dog.png';
 import dog1 from '../imgs/dog1.png';
 import dog2 from '../imgs/dog2.png';
 import dog3 from '../imgs/dog3.png';
+import { useEffect } from "react";
 
 const InformationContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
+  justify-content: start;
+  height: 90vh;
+  margin-top: 100px;
 `
 
 const InformationBox = styled(Link)`
@@ -21,7 +26,7 @@ const InformationBox = styled(Link)`
   margin: 10px 0px;
   padding: 10px;
   border-radius: 20px;
-  background-color: aliceblue;
+  background-color: white;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   cursor: pointer;
   h1 {
@@ -60,10 +65,16 @@ const IntroBox = styled.div`
 `
 
 const Information = () => {
+
+  useEffect(() => {
+    AOS.init();
+  },[])
+  
+
   return (
     <InformationContainer>
-      <InformationBox to={'/animalDisease'}>
-        <ImgBox>
+      <InformationBox  to={'/animalDisease'} data-aos="fade-down" data-aos-duration="1000">
+        <ImgBox >
           <img className="dog" src={dog} alt="강아지이미지" />
         </ImgBox>
         <IntroBox>
@@ -71,7 +82,7 @@ const Information = () => {
           <p>호흡기, 눈, 귀 등등..</p>
         </IntroBox>
       </InformationBox>
-      <InformationBox to={'/animalGrowth'}>
+      <InformationBox to={'/animalGrowth'} data-aos="fade-down" data-aos-duration="1000">
         <ImgBox>
           <img className="dog1" src={dog1} alt="강아지이미지" />
         </ImgBox>
@@ -80,7 +91,7 @@ const Information = () => {
           <p>출생에서 3주까지는..</p>
         </IntroBox>
       </InformationBox>
-      <InformationBox to={'/animalTraining'}>
+      <InformationBox to={'/animalTraining'} data-aos="fade-down" data-aos-duration="1000">
         <ImgBox>
           <img className="dog2" src={dog2} alt="강아지이미지" />
         </ImgBox>
@@ -89,7 +100,7 @@ const Information = () => {
           <p>훈육은 생후 2~3개월...</p>
         </IntroBox>
       </InformationBox>
-      <InformationBox to={'/animalVaccinations'}>
+      <InformationBox to={'/animalVaccinations'} data-aos="fade-down" data-aos-duration="1000">
         <ImgBox>
           <img className="dog3" src={dog3} alt="강아지이미지" />
         </ImgBox>
