@@ -2,10 +2,6 @@
 # 📖 강아지 정보 서비스 
 
 ![#9091E9 (1)](https://github.com/chanyoungcoding/MyPetProject/assets/95753171/c078571b-2740-41b4-9c73-63d52256fd5a)
-[![동영상 썸네일](https://img.youtube.com/vi/Sw5N_lkT0Ak/0.jpg)](https://www.youtube.com/watch?v=Sw5N_lkT0Ak)
-[![동영상 썸네일](https://img.youtube.com/vi/ZoqNff6jPYI/0.jpg)](https://www.youtube.com/watch?v=ZoqNff6jPYI)
-
-
 
 
 <br>
@@ -60,7 +56,7 @@
 <br>
 
 ## 3. 📺 시연 영상
-[![동영상 썸네일]([https://www.youtube.com/watch?v=Sw5N_lkT0Ak](https://www.youtube.com/watch?v=Sw5N_lkT0Ak))
+[![동영상 썸네일](https://img.youtube.com/vi/Sw5N_lkT0Ak/0.jpg)](https://www.youtube.com/watch?v=Sw5N_lkT0Ak)
 
 
 <br>
