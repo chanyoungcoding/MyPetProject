@@ -41,6 +41,7 @@
 
 </div>
 
+<br>
 
 ## 2. 🔧 코드 분석 및 성능 개선
 <br>
@@ -51,6 +52,8 @@
 ![이미지2](https://github.com/chanyoungcoding/MyPetProject/assets/95753171/770af47a-3c81-4af6-83e7-d49de71329a3)
 
 ![캡처2](https://github.com/chanyoungcoding/MyPetProject/assets/95753171/13762266-653b-483c-8fcd-c01163ba433d)
+
+<br>
 
 ## 3. 📃 프로젝트 구조
 <br>
