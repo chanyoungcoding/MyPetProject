@@ -34,12 +34,7 @@ const alertRegisterSuccess = (message:string) => {
     confirmButtonText: "확인",
     confirmButtonColor: "#3085d6",
     showConfirmButton: true,
-  }).then(result => {
-    if(result.isConfirmed) {
-      const navigate = useNavigate();
-      navigate('/login')
-    }
-  });
+  })
 }
 
 const alertError = (message:string) => {
@@ -210,13 +205,13 @@ export const useRegisterMutation = () => {
     onSuccess: (e) => {
       const message = e.data.message;
       alertRegisterSuccess(message);
+      navigate('/login');
     },
     onError: (error:AxiosError) => {
       if (error.response) {
         const responseData = error.response.data as { message: string }; // 타입 단언
         alertError(responseData.message);
       }
-      navigate('/register')
     }
   })
 }
