@@ -56,7 +56,8 @@
 <br>
 
 ## 3. 📺 시연 영상
-[![동영상 썸네일](https://www.youtube.com/watch?v=Sw5N_lkT0Ak)
+[![동영상 썸네일]([https://www.youtube.com/watch?v=Sw5N_lkT0Ak](https://www.youtube.com/watch?v=Sw5N_lkT0Ak))
+
 
 <br>
 
