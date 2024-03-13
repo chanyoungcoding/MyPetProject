@@ -61,7 +61,15 @@
 
 <br>
 
-## 4. 📃 프로젝트 구조
+## 4. 🖌 피그마
+
+![image](https://github.com/chanyoungcoding/MyPetProject/assets/95753171/d00254b5-32af-46d0-8bf5-886715c1bf46)
+
+
+<br>
+
+## 5. 📃 프로젝트 구조
+
 <br>
 
 
