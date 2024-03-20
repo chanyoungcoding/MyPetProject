@@ -2,6 +2,7 @@ import { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 import { LuUser, LuLock } from "react-icons/lu";
 
+import LoginOptimizationPet from '../imgs/_loginImage.webp';
 import LoginPet from '../imgs/loginImage.png';
 import LoginBackground from '../imgs/MainBackground.jpg';
 import { Link } from "react-router-dom";
@@ -44,11 +45,13 @@ const InputContainer = styled.div`
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     cursor: pointer;
   }
-  img {
+
+  img, source {
     position: absolute;
     top: -165px;
     right: 10px;
   }
+
 `
 
 const InputBox = styled.div`
@@ -92,7 +95,10 @@ const Login = () => {
     <LoginContainer>
       <LoginIntro>Hi Welcome</LoginIntro>
       <InputContainer>
-        <img src={LoginPet} alt="petImage" />
+        <picture>
+          <source srcSet={LoginOptimizationPet} type="image/webp" />
+          <img src={LoginPet} alt="petImage" />
+        </picture>
         <InputBox>
           <LuUser className="inputicon" size={30}/>
           <input 

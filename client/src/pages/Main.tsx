@@ -9,7 +9,7 @@ import "aos/dist/aos.css";
 import { dogstalks } from "../recoil/GlobalManagement";
 import { useApiUserData } from "../services/api";
 import AddButton from '../imgs/add.png';
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 const MainContainer = styled.div`
   height: 95vh;
@@ -95,7 +95,7 @@ const Main = () => {
 
   const { data, isLoading, isError } = useApiUserData(userDB);
 
-  const calculateDaysDifference = (selectedDate:  string | Date) => {
+  const calculateDaysDifference = useMemo(() => (selectedDate:  string | Date) => {
     const currentDate = new Date();
     const selectedDateObject = new Date(selectedDate);
 
@@ -103,8 +103,8 @@ const Main = () => {
     const dayDifference = Math.floor(timeDifference / (24 * 60 * 60 * 1000));
     const Day = Math.abs(dayDifference) - 1
     return Day;
-  };
-
+  }, []) 
+  
   const getRandomTalk = () => {
     const randomIndex = Math.floor(Math.random() * randomTalk.length);
     return randomTalk[randomIndex];
